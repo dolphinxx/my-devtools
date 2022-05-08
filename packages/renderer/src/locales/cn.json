@@ -1,0 +1,63 @@
+{
+  "ui": {
+    "title": {
+      "app": "我的开发工具",
+      "tip": "提示",
+      "info": "信息",
+      "warning": "警告",
+      "error": "错误"
+    },
+    "btn": {
+      "ok": "确定",
+      "cancel": "取消",
+      "save": "保存",
+      "generate": "生成"
+    },
+    "label": {
+      "text": "文本：",
+      "icon": "图标：",
+      "dotColor": "点阵颜色：",
+      "backgroundColor": "背景颜色：",
+      "imageMargin": "图片边距：",
+      "imageQuality": "图片质量：",
+      "errorCorrectionLevel": "纠错级别："
+    },
+    "level": {
+      "low": "低",
+      "medium": "中",
+      "quartile": "四分位",
+      "high": "高"
+    }
+  },
+  "route": {
+    "title": {
+      "home": "首页",
+      "crypto": {
+        "base64": "Base64",
+        "hash": "Hash"
+      },
+      "formatter": {
+        "json": "JSON 美化 & 压缩",
+        "html": "HTML 美化 & 压缩",
+        "js": "JS 美化 & 压缩",
+        "css": "CSS 美化 & 压缩",
+        "xml": "XML 美化 & 压缩",
+        "sql": "SQL 美化 & 压缩"
+      },
+      "url-encoder": "Url 编码 & 解码",
+      "qrcode": "QR Code 生成 & 扫描"
+    }
+  },
+  "message": {
+    "v": {
+      "required": "{field}是必须的"
+    },
+    "operation": {
+      "success": "操作成功！",
+      "failed": "操作失败！"
+    },
+    "confirm": {
+      "exit": "确定退出吗？"
+    }
+  }
+}

@@ -8,14 +8,19 @@
     "strict": true,
     "isolatedModules": true,
 
-    "types" : ["node"],
+    "types" : ["node", "unplugin-icons/types/vue"],
     "baseUrl": ".",
     "paths": {
       "/@/*": [
         "./src/*"
       ]
     },
-    "lib": ["ESNext", "dom", "dom.iterable"]
+    "lib": ["ESNext", "dom", "dom.iterable"],
+
+    "useDefineForClassFields": true,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
 
   "include": [

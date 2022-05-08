@@ -1,0 +1,63 @@
+{
+  "ui": {
+    "title": {
+      "app": "My Dev Tools",
+      "tip": "Tip",
+      "info": "Info",
+      "warning": "Warning",
+      "error": "Error"
+    },
+    "btn": {
+      "ok": "OK",
+      "cancel": "Cancel",
+      "save": "Save",
+      "generate": "Generate"
+    },
+    "label": {
+      "text": "Text:",
+      "icon": "Icon:",
+      "dotColor": "Dot Color:",
+      "backgroundColor": "Background Color:",
+      "imageMargin": "Image Margin:",
+      "imageQuality": "Image Quality:",
+      "errorCorrectionLevel": "Error Correction Level:"
+    },
+    "level": {
+      "low": "Low",
+      "medium": "Medium",
+      "quartile": "Quartile",
+      "high": "High"
+    }
+  },
+  "route": {
+    "title": {
+      "home": "Home",
+      "crypto": {
+        "base64": "Base64",
+        "hash": "Hash"
+      },
+      "formatter": {
+        "json": "JSON Beautifier & Minifier",
+        "html": "HTML Beautifier & Minifier",
+        "js": "JS Beautifier & Minifier",
+        "css": "CSS Beautifier & Minifier",
+        "xml": "XML Beautifier & Minifier",
+        "sql": "SQL Beautifier & Minifier"
+      },
+      "url-encoder": "Url Encoder & Decoder",
+      "qrcode": "QR Code Generate & Scan"
+    }
+  },
+  "message": {
+    "v": {
+      "required": "{field} is required"
+    },
+    "operation": {
+      "success": "Operation success!",
+      "failed": "Operation failed!"
+    },
+    "confirm": {
+      "exit": "Are you sure to exit?"
+    }
+  }
+}

@@ -5,6 +5,11 @@ import {URL} from 'url';
 async function createWindow() {
   const browserWindow = new BrowserWindow({
     show: false, // Use 'ready-to-show' event to show window
+    frame: false,
+    // transparent:true,
+    // backgroundColor: '#00000000',
+    width: 1024,
+    height: 768,
     webPreferences: {
       nativeWindowOpen: true,
       webviewTag: false, // The webview tag is not recommended. Consider alternatives like iframe or Electron's BrowserView. https://www.electronjs.org/docs/latest/api/webview-tag#warning
@@ -23,6 +28,7 @@ async function createWindow() {
 
     if (import.meta.env.DEV) {
       browserWindow?.webContents.openDevTools();
+      browserWindow?.maximize();
     }
   });
 

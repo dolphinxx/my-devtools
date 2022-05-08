@@ -1,6 +1,7 @@
-import {app} from 'electron';
+import {app, ipcMain, BrowserWindow, dialog} from 'electron';
 import './security-restrictions';
 import {restoreOrCreateWindow} from '/@/mainWindow';
+import {writeFileSync} from 'fs';
 
 
 /**
@@ -45,24 +46,58 @@ app.whenReady()
 /**
  * Install Vue.js or some other devtools in development mode only
  */
-if (import.meta.env.DEV) {
-  app.whenReady()
-    .then(() => import('electron-devtools-installer'))
-    .then(({default: installExtension, VUEJS3_DEVTOOLS}) => installExtension(VUEJS3_DEVTOOLS, {
-      loadExtensionOptions: {
-        allowFileAccess: true,
-      },
-    }))
-    .catch(e => console.error('Failed install extension:', e));
-}
+// if (import.meta.env.DEV) {
+//   app.whenReady()
+//     .then(() => import('electron-devtools-installer'))
+//     .then(({default: installExtension, VUEJS3_DEVTOOLS}) => installExtension(VUEJS3_DEVTOOLS, {
+//       loadExtensionOptions: {
+//         allowFileAccess: true,
+//       },
+//     }))
+//     .catch(e => console.error('Failed install extension:', e));
+// }
 
-/**
- * Check new app version in production mode only
- */
-if (import.meta.env.PROD) {
-  app.whenReady()
-    .then(() => import('electron-updater'))
-    .then(({autoUpdater}) => autoUpdater.checkForUpdatesAndNotify())
-    .catch((e) => console.error('Failed check updates:', e));
-}
+// /**
+//  * Check new app version in production mode only
+//  */
+// if (import.meta.env.PROD) {
+//   app.whenReady()
+//     .then(() => import('electron-updater'))
+//     .then(({autoUpdater}) => autoUpdater.checkForUpdatesAndNotify())
+//     .catch((e) => console.error('Failed check updates:', e));
+// }
 
+ipcMain.on('system', function(event, msg) {
+  if(msg.event === 'exit') {
+    app.quit();
+    return;
+  }
+  if(msg.event === 'minimize') {
+    BrowserWindow.getFocusedWindow()?.minimize();
+    return;
+  }
+  if(msg.event === 'maximize') {
+    const window = BrowserWindow.getFocusedWindow();
+    if(window) {
+      if(window.isMaximized()) {
+        window.unmaximize();
+      } else {
+        window.maximize();
+      }
+    }
+    return;
+  }
+  if(msg.event === 'saveFile') {
+    const data:ArrayBuffer|string = msg.data;
+    dialog.showSaveDialog({defaultPath: msg.name}).then(_ => {
+      if (_.canceled || !_.filePath) {
+        return;
+      }
+      if (typeof data === 'string') {
+        writeFileSync(_.filePath, data, {encoding: 'utf-8'});
+      } else {
+        writeFileSync(_.filePath, new Uint8Array(data), {encoding: 'binary'});
+      }
+    });
+  }
+});

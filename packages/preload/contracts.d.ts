@@ -2,7 +2,9 @@
 
 interface Exposed {
   readonly nodeCrypto: Readonly<typeof import('./src/nodeCrypto').nodeCrypto>;
+  readonly nodeFormatter: Readonly<typeof import('./src/nodeFormatter').nodeFormatter>;
   readonly versions: Readonly<typeof import('./src/versions').versions>;
+  readonly systems: Readonly<typeof import('./src/systems').systems>;
 }
 
 
