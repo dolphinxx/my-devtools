@@ -1,8 +1,9 @@
 <template>
   <el-scrollbar style="flex: 1;">
-    <div style="padding: 12px;">
+    <div style="">
       <div
         class="page"
+        v-bind="$attrs"
       >
         <slot />
       </div>
