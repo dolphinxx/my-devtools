@@ -34,7 +34,7 @@ app.component('IconHomeFilled', HomeFilled);
 app.use(createI18n({
   allowComposition: true,
   legacy: false,
-  locale: 'en',
+  locale: localStorage.getItem('locale') || 'en',
   messages,
   // messages: {
   //   'cn': zhCn,
