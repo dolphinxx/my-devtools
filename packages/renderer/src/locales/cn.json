@@ -13,6 +13,7 @@
       "cancel": "取消",
       "save": "保存",
       "generate": "生成",
+      "scan": "扫描",
       "beautify": "美化",
       "minify": "压缩",
       "encode": "编码",
@@ -20,7 +21,9 @@
       "text": "文本",
       "file": "文件",
       "preview": "预览",
-      "calc": "计算"
+      "calc": "计算",
+      "copy": "复制",
+      "pick": "选取"
     },
     "label": {
       "text": "文本：",
@@ -81,6 +84,7 @@
     "confirm": {
       "exit": "确定退出吗？"
     },
-    "missing-file-path": "缺少文件路径"
+    "missing-file-path": "缺少文件路径",
+    "paste-or-pick-an-image": "粘贴或选取一个图片"
   }
 }

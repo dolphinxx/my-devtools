@@ -13,6 +13,7 @@
       "cancel": "Cancel",
       "save": "Save",
       "generate": "Generate",
+      "scan": "Scan",
       "beautify": "Beautify",
       "minify": "Minify",
       "encode": "Encode",
@@ -20,7 +21,9 @@
       "text": "Text",
       "file": "File",
       "preview": "Preview",
-      "calc": "Calc"
+      "calc": "Calc",
+      "copy": "Copy",
+      "pick": "Pick"
     },
     "label": {
       "text": "Text:",
@@ -81,6 +84,7 @@
     "confirm": {
       "exit": "Are you sure to exit?"
     },
-    "missing-file-path": "Missing file path"
+    "missing-file-path": "Missing file path",
+    "paste-or-pick-an-image": "Paste or pick an image"
   }
 }
