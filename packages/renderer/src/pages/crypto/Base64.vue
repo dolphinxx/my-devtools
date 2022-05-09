@@ -3,11 +3,11 @@
     <section>
       <el-tabs v-model="sourceType">
         <el-tab-pane
-          label="Text"
+          :label="t('ui.btn.text')"
           name="text"
         >
           <div>
-            <label for="raw">Raw:</label>
+            <label for="raw">{{ t('ui.label.raw') }}</label>
             <el-input
               id="raw"
               v-model="raw"
@@ -17,11 +17,11 @@
           </div>
         </el-tab-pane>
         <el-tab-pane
-          label="File"
+          :label="t('ui.btn.file')"
           name="file"
         >
           <div>
-            <label for="file">File:</label>
+            <label for="file">{{ t('ui.label.file') }}</label>
             <el-input
               id="file"
               ref="fileRef"
@@ -32,7 +32,7 @@
         </el-tab-pane>
       </el-tabs>
       <div class="form-gutter">
-        <label for="encoded">Encoded:</label>
+        <label for="encoded">{{ t('ui.label.encoded') }}</label>
         <el-input
           id="encoded"
           v-model="encoded"
@@ -42,13 +42,13 @@
       </div>
       <div class="form-gutter">
         <el-button @click="encode">
-          Encode
+          {{ t('ui.btn.encode') }}
         </el-button>
         <el-button
           v-if="sourceType === 'text'"
           @click="decode"
         >
-          Decode
+          {{ t('ui.btn.decode') }}
         </el-button>
         <el-popover
           v-if="isImage"
@@ -58,7 +58,7 @@
         >
           <template #reference>
             <el-button>
-              Preview
+              {{ t('ui.btn.preview') }}
             </el-button>
           </template>
           <el-image :src="encoded" />
@@ -73,6 +73,9 @@ import {ref, computed} from 'vue';
 import type { InputInstance} from 'element-plus';
 import {ElMessage} from 'element-plus';
 import PageContainer from '/@/components/PageContainer.vue';
+import {useI18n} from 'vue-i18n';
+
+const {t} = useI18n();
 
 const sourceType = ref('text');
 const raw = ref<string>('');

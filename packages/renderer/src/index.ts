@@ -17,11 +17,22 @@ import {HomeFilled, Menu, Document} from '@element-plus/icons-vue';
 
 import routes from './routes';
 
+const i18n = createI18n({
+  allowComposition: true,
+  legacy: false,
+  locale: localStorage.getItem('locale') || 'en',
+  messages,
+  // messages: {
+  //   'cn': zhCn,
+  //   'en': enUs,
+  // },
+});
+
 const router = VueRouter.createRouter({
   // In Electron, Vue Router only works in hash mode.
   // https://nklayman.github.io/vue-cli-plugin-electron-builder/guide/commonIssues.html#blank-screen-on-builds-but-works-fine-on-serve
   history: VueRouter.createWebHashHistory(),
-  routes,
+  routes: routes,
 });
 
 const app = createApp(App);
@@ -32,15 +43,7 @@ app.component('ElSubMenu', ElSubMenu);
 app.component('IconMenu', Menu);
 app.component('IconHomeFilled', HomeFilled);
 app.component('IconDocument', Document);
-app.use(createI18n({
-  allowComposition: true,
-  legacy: false,
-  locale: localStorage.getItem('locale') || 'en',
-  messages,
-  // messages: {
-  //   'cn': zhCn,
-  //   'en': enUs,
-  // },
-}));
+app.use(i18n);
+console.log(app.config.$t);
 app.mount('#app');
 

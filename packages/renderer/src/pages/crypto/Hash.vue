@@ -3,11 +3,11 @@
     <section>
       <el-tabs v-model="sourceType">
         <el-tab-pane
-          label="Text"
+          :label="t('ui.btn.text')"
           name="text"
         >
           <div>
-            <label for="raw">Raw:</label>
+            <label for="raw">{{ t('ui.label.raw') }}</label>
             <el-input
               id="raw"
               v-model="raw"
@@ -16,11 +16,11 @@
           </div>
         </el-tab-pane>
         <el-tab-pane
-          label="File"
+          :label="t('ui.btn.file')"
           name="file"
         >
           <div>
-            <label for="file">File:</label>
+            <label for="file">{{ t('ui.label.file') }}</label>
             <el-input
               id="file"
               ref="fileRef"
@@ -32,7 +32,7 @@
         </el-tab-pane>
       </el-tabs>
       <div class="form-gutter">
-        <label>Type:</label>
+        <label>{{ t('ui.label.algorithm') }}</label>
         <div>
           <el-radio-group v-model="type">
             <el-radio label="md5">
@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="form-gutter">
-        <label>Encrypted:</label>
+        <label>{{ t('ui.label.encrypted') }}</label>
         <el-input
           v-model="encrypted"
           @focus="$selectText"
@@ -62,7 +62,7 @@
           :loading="calc$$"
           @click="calc"
         >
-          Calc
+          {{ t('ui.btn.calc') }}
         </el-button>
       </div>
     </section>
@@ -74,8 +74,11 @@ import {ref} from 'vue';
 import type {InputInstance} from 'element-plus';
 import {ElMessage} from 'element-plus';
 import PageContainer from '/@/components/PageContainer.vue';
+import {useI18n} from 'vue-i18n';
 
 type HashType = 'md5'|'sha1'|'sha256'|'sha512';
+
+const {t} = useI18n();
 
 const sourceType = ref('text');
 const raw = ref('');

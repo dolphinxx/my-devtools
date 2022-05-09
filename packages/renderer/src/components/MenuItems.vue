@@ -5,7 +5,7 @@
     :key="i"
     :index="`${index}${i}`"
     :route="m.route"
-    :title="m.name"
+    :title="t(m.name)"
   >
     <el-icon v-if="m.icon && !m.children">
       <component :is="m.icon" />
@@ -14,7 +14,7 @@
       <el-icon v-if="m.icon && m.children">
         <component :is="m.icon" />
       </el-icon>
-      <span>{{ m.name }}</span>
+      <span>{{ t(m.name) }}</span>
     </template>
     <menu-items
       v-if="m.children"
@@ -25,6 +25,7 @@
 </template>
 <script lang="ts">
 import type {PropType} from 'vue';
+import {useI18n} from 'vue-i18n';
 
 export default {
   name: 'MenuItems',
@@ -37,6 +38,12 @@ export default {
       type: String,
       required: true,
     },
+  },
+  setup() {
+    const {t} = useI18n();
+    return {
+      t,
+    };
   },
 };
 </script>

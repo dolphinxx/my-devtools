@@ -82,42 +82,42 @@ const {t, locale} = useI18n({
 
 const menuData = ref<MenuDefinition[]>([
   {
-    name: 'Home',
+    name: 'route.title.home',
     route: {path: '/'},
     icon: 'IconHomeFilled',
   },
   {
-    name: 'Article',
+    name: 'route.title.article',
     route: {path: '/article'},
     icon: 'IconDocument',
   },
   {
-    name: 'Tools',
+    name: 'route.title.tools',
     icon: 'IconMenu',
     children: [
       {
-        name: 'Crypto',
+        name: 'route.title.cryptos',
         children: [
           {
-            name: 'Base64',
+            name: 'route.title.crypto.base64',
             route: {path: '/crypto/base64'},
           },
           {
-            name: 'Hash',
+            name: 'route.title.crypto.hash',
             route: {path: '/crypto/hash'},
           },
         ],
       },
       {
-        name: 'Url Encoder & Decoder',
+        name: 'route.title.url-encoder',
         route: {path: '/url-encoder'},
       },
       {
-        name: 'QR Code',
+        name: 'route.title.qrcode',
         route: {path: '/qrcode'},
       },
       {
-        name: 'Beautifier & Minifier',
+        name: 'route.title.formatters',
         children: [
           {
             name: 'JSON',

@@ -12,7 +12,15 @@
       "ok": "OK",
       "cancel": "Cancel",
       "save": "Save",
-      "generate": "Generate"
+      "generate": "Generate",
+      "beautify": "Beautify",
+      "minify": "Minify",
+      "encode": "Encode",
+      "decode": "Decode",
+      "text": "Text",
+      "file": "File",
+      "preview": "Preview",
+      "calc": "Calc"
     },
     "label": {
       "text": "Text:",
@@ -21,7 +29,15 @@
       "backgroundColor": "Background Color:",
       "imageMargin": "Image Margin:",
       "imageQuality": "Image Quality:",
-      "errorCorrectionLevel": "Error Correction Level:"
+      "errorCorrectionLevel": "Error Correction Level:",
+      "input": "Input：",
+      "output": "Output：",
+      "raw": "Raw:",
+      "file": "File:",
+      "encoded": "Encoded:",
+      "type": "Type:",
+      "algorithm": "Algorithm:",
+      "encrypted": "Encrypted:"
     },
     "level": {
       "low": "Low",
@@ -33,17 +49,21 @@
   "route": {
     "title": {
       "home": "Home",
+      "tools": "Tools",
+      "cryptos": "Crypto",
       "crypto": {
         "base64": "Base64",
         "hash": "Hash"
       },
+      "formatters": "Formatter",
+      "-beautifier-minifier": " Beautifier & Minifier",
       "formatter": {
-        "json": "JSON Beautifier & Minifier",
-        "html": "HTML Beautifier & Minifier",
-        "js": "JS Beautifier & Minifier",
-        "css": "CSS Beautifier & Minifier",
-        "xml": "XML Beautifier & Minifier",
-        "sql": "SQL Beautifier & Minifier"
+        "json": "JSON@:route.title.-beautifier-minifier",
+        "html": "HTML@:route.title.-beautifier-minifier",
+        "js": "JS@:route.title.-beautifier-minifier",
+        "css": "CSS@:route.title.-beautifier-minifier",
+        "xml": "XML@:route.title.-beautifier-minifier",
+        "sql": "SQL@:route.title.-beautifier-minifier"
       },
       "url-encoder": "Url Encoder & Decoder",
       "qrcode": "QR Code Generate & Scan",

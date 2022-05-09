@@ -2,7 +2,7 @@
   <page-container>
     <section>
       <div>
-        <label for="input">Input:</label>
+        <label for="input">{{ t('ui.label.input') }}</label>
         <el-input
           id="input"
           v-model="input"
@@ -11,7 +11,7 @@
         />
       </div>
       <div class="form-gutter">
-        <label for="output">Output:</label>
+        <label for="output">{{ t('ui.label.output') }}</label>
         <el-input
           id="output"
           v-model="output"
@@ -24,13 +24,13 @@
           :disabled="input.length === 0"
           @click="doFormat"
         >
-          Format
+          {{ t('ui.btn.beautify') }}
         </el-button>
         <el-button
           :disabled="input.length === 0"
           @click="doMinify"
         >
-          Minify
+          {{ t('ui.btn.minify') }}
         </el-button>
       </div>
       <div v-if="warnings.length > 0">
@@ -49,6 +49,7 @@
 import {ref} from 'vue';
 import {ElMessage} from 'element-plus';
 import PageContainer from '/@/components/PageContainer.vue';
+import {useI18n} from 'vue-i18n';
 
 export default {
   components: {PageContainer},
@@ -58,6 +59,7 @@ export default {
     minify: {type: Function, required: true},
   },
   setup(props:{format:FormatterFn, minify: FormatterFn}) {
+    const {t} = useI18n();
     const input = ref('');
     const output = ref('');
     const warnings = ref<string[]>([]);
@@ -97,6 +99,7 @@ export default {
     }
 
     return {
+      t,
       input,
       output,
       warnings,
