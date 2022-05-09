@@ -1,5 +1,6 @@
 {
   "ui": {
+    "language": "Language",
     "title": {
       "app": "My Dev Tools",
       "tip": "Tip",
@@ -45,7 +46,8 @@
         "sql": "SQL Beautifier & Minifier"
       },
       "url-encoder": "Url Encoder & Decoder",
-      "qrcode": "QR Code Generate & Scan"
+      "qrcode": "QR Code Generate & Scan",
+      "article": "Article"
     }
   },
   "message": {
@@ -58,6 +60,7 @@
     },
     "confirm": {
       "exit": "Are you sure to exit?"
-    }
+    },
+    "missing-file-path": "Missing file path"
   }
 }

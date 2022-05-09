@@ -13,7 +13,7 @@ import 'element-plus/theme-chalk/src/message.scss';
 import 'element-plus/theme-chalk/src/message-box.scss';
 import myPlugin from '/@/plugin';
 import {ElMenuItem, ElSubMenu} from 'element-plus';
-import {HomeFilled, Menu} from '@element-plus/icons-vue';
+import {HomeFilled, Menu, Document} from '@element-plus/icons-vue';
 
 import routes from './routes';
 
@@ -31,6 +31,7 @@ app.component('ElMenuItem', ElMenuItem);
 app.component('ElSubMenu', ElSubMenu);
 app.component('IconMenu', Menu);
 app.component('IconHomeFilled', HomeFilled);
+app.component('IconDocument', Document);
 app.use(createI18n({
   allowComposition: true,
   legacy: false,

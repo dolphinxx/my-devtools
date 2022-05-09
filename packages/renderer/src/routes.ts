@@ -10,4 +10,5 @@ export default [
   {path: '/formatter/sql', component: () => import('/@/pages/formatter/SQLFormatter.vue'), meta: {title: 'route.title.formatter.sql'}},
   {path: '/url-encoder', component: () => import('/@/pages/UrlEncoder.vue'), meta: {title: 'route.title.url-encoder'}},
   {path: '/qrcode', component: () => import('/@/pages/QRCode.vue'), meta: {title: 'route.title.qrcode'}},
+  {path: '/article', component: () => import('/@/pages/ArticleEditor.vue'), meta: {title: 'route.title.article'}},
 ];

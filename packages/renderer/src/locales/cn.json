@@ -1,5 +1,6 @@
 {
   "ui": {
+    "language": "语言",
     "title": {
       "app": "我的开发工具",
       "tip": "提示",
@@ -45,7 +46,8 @@
         "sql": "SQL 美化 & 压缩"
       },
       "url-encoder": "Url 编码 & 解码",
-      "qrcode": "QR Code 生成 & 扫描"
+      "qrcode": "QR Code 生成 & 扫描",
+      "article": "文章"
     }
   },
   "message": {
@@ -58,6 +60,7 @@
     },
     "confirm": {
       "exit": "确定退出吗？"
-    }
+    },
+    "missing-file-path": "缺少文件路径"
   }
 }
