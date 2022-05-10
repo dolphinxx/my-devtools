@@ -11,6 +11,11 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 
 import Icons from 'unplugin-icons/vite';
 
+import Unocss from 'unocss/vite';
+import {
+  presetUno,
+} from 'unocss';
+
 const PACKAGE_ROOT = __dirname;
 
 /**
@@ -57,6 +62,13 @@ const config = {
         }),
       ],
       dts: 'types/components.d.ts',
+    }),
+    Unocss({
+      presets: [
+        presetUno(),
+      ],
+      transformers: [
+      ],
     }),
   ],
   base: '',

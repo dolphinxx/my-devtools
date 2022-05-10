@@ -7,6 +7,7 @@ import messages from '@intlify/vite-plugin-vue-i18n/messages';
 // import enUs from '/@/locales/en-us';
 
 import '/@/styles/index.scss';
+import 'uno.css';
 
 // If you want to use ElMessage, import it.
 import 'element-plus/theme-chalk/src/message.scss';
