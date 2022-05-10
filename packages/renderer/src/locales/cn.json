@@ -48,7 +48,13 @@
       "encrypted": "加密结果：",
       "appDir": "应用目录：",
       "articleDir": "文章目录：",
-      "language": "语言："
+      "language": "语言：",
+      "darkMode": "主题：",
+      "darkModes": {
+        "system": "系统",
+        "light": "亮色",
+        "dark": "暗色"
+      }
     },
     "level": {
       "low": "低",

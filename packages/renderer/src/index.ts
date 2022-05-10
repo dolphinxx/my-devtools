@@ -17,6 +17,12 @@ import {HomeFilled, Menu, Document} from '@element-plus/icons-vue';
 
 import routes from './routes';
 
+if(window.systems.shouldUseDarkColors()) {
+  document.querySelector('html')?.classList.add('dark');
+} else {
+  document.querySelector('html')?.classList.remove('dark');
+}
+
 const i18n = createI18n({
   allowComposition: true,
   legacy: false,

@@ -21,4 +21,5 @@ type SystemConfig = {
 type AppConfig = {
   articleDir: string;
   language: string;
+  darkMode: 'system'|'light'|'dark';
 };

@@ -27,16 +27,7 @@
         </div>
       </el-aside>
       <el-container style="flex-direction: column;">
-        <div class="title-bar">
-          <i
-            class="menu-toggle"
-            @click="isCollapse=!isCollapse"
-          >
-            <d-arrow-right v-if="isCollapse" />
-            <d-arrow-left v-if="!isCollapse" />
-          </i>
-          <h1>{{ t($route.meta.title||'') }}</h1>
-        </div>
+        <title-bar v-model="isCollapse" />
         <router-view v-slot="{ Component }">
           <transition
             name="fade"
@@ -52,16 +43,12 @@
 </template>
 
 <script lang="ts" setup>
-import {DArrowLeft, DArrowRight, Setting as IconSetting} from '@element-plus/icons-vue';
+import {Setting as IconSetting} from '@element-plus/icons-vue';
 import MenuItems from '/@/components/MenuItems.vue';
 import {ref} from 'vue';
-import {useI18n} from 'vue-i18n';
 import menus from '/@/menus';
 import SystemConfig from '/@/components/SystemConfig.vue';
-
-const {t} = useI18n({
-  useScope: 'global',
-});
+import TitleBar from '/@/components/TitleBar.vue';
 
 const showingSystemConfig = ref(false);
 
@@ -83,22 +70,6 @@ const isCollapse = ref(true);
 .main-content {
 
 }
-.title-bar {
-  height: 36px;
-  padding: 9px 12px;
-  width: 100%;
-  flex: none;
-  background-color: #ffffff;
-  display: flex;
-  h1 {
-    font-weight: normal;
-    justify-self: center;
-    font-size: 16px;
-    line-height: 18px;
-    padding: 0;
-    margin: 0 0 0 6px;
-  }
-}
 .side-container {
   width: 200px;
   display: flex;
@@ -106,12 +77,13 @@ const isCollapse = ref(true);
   //flex-grow: 1;
   //flex-basis: 100%;
   transition: width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  background-color: #ffffff;
+  background-color: var(--el-bg-color);
   overflow: hidden;
   height: 100%;
-  //border-right: solid 1px var(--el-border-color-light);
+  border-right: solid 1px var(--el-border-color-light);
   &.collapsed {
     width: 0;
+    border: none;
   }
   .el-scrollbar {
     flex: 1;
@@ -147,13 +119,5 @@ const isCollapse = ref(true);
     border-right: none;
     overflow-x: hidden;
   }
-}
-.menu-toggle {
-  display: block;
-  width: 18px;
-  height: 18px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  cursor: pointer;
 }
 </style>

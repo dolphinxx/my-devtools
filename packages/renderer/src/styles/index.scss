@@ -11,17 +11,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
-  background-color: #f1f1f1;
+  background-color: var(--el-bg-color);
 }
 
 a {
-  color: var(--el-color-primary);
-}
-
-code {
-  border-radius: 2px;
-  padding: 2px 4px;
-  background-color: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
 }
 
@@ -38,7 +31,7 @@ input[type=file]::file-selector-button {
 }
 
 .page {
-  background-color: #fefefe;
+  background-color: var(--el-bg-color-page);
   padding: 20px;
 }
 

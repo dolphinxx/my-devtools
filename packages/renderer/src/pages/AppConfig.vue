@@ -23,6 +23,26 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
+          <el-form-item :label="t('ui.label.darkMode')">
+            <el-radio-group
+              v-model="appConfig.darkMode"
+              @change="updateDarkMode"
+            >
+              <el-radio label="system">
+                {{ t('ui.label.darkModes.system') }}
+              </el-radio>
+              <el-radio label="light">
+                {{ t('ui.label.darkModes.light') }}
+              </el-radio>
+              <el-radio label="dark">
+                {{ t('ui.label.darkModes.dark') }}
+              </el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
           <el-form-item :label="t('ui.label.articleDir')">
             <el-input
               v-model="appConfig.articleDir"
@@ -59,6 +79,15 @@ function selectDir() {
 function updateLocale() {
   locale.value = appConfig.value.language;
   saveConfig();
+}
+
+function updateDarkMode() {
+  saveConfig();
+  if(window.systems.shouldUseDarkColors()) {
+    document.querySelector('html')?.classList.add('dark');
+  } else {
+    document.querySelector('html')?.classList.remove('dark');
+  }
 }
 
 function saveConfig() {

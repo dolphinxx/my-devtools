@@ -48,7 +48,13 @@
       "encrypted": "Encrypted:",
       "appDir": "App Dir:",
       "articleDir": "Article Dir:",
-      "language": "Language:"
+      "language": "Language:",
+      "darkMode": "Dark Mode:",
+      "darkModes": {
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark"
+      }
     },
     "level": {
       "low": "Low",

@@ -1,11 +1,17 @@
 import {BrowserWindow} from 'electron';
 import {join} from 'path';
 import {URL} from 'url';
+import * as os from 'os';
+
+function isMacOS() {
+  return os.platform() === 'darwin';
+}
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
     show: false, // Use 'ready-to-show' event to show window
-    frame: true,
+    frame: false,
+    titleBarStyle: 'hidden',
     // transparent:true,
     // backgroundColor: '#00000000',
     width: 1024,
@@ -17,6 +23,9 @@ async function createWindow() {
       preload: join(__dirname, '../../preload/dist/index.cjs'),
     },
   });
+  if(isMacOS()) {
+    browserWindow.setWindowButtonVisibility(true);
+  }
 
   /**
    * If you install `show: true` then it can cause issues when trying to close the window.
@@ -26,10 +35,9 @@ async function createWindow() {
    */
   browserWindow.on('ready-to-show', () => {
     browserWindow?.show();
-
     if (import.meta.env.DEV) {
       browserWindow?.webContents.openDevTools();
-      browserWindow?.maximize();
+      // browserWindow?.maximize();
     }
   });
 

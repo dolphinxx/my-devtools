@@ -1,9 +1,25 @@
-import {app, BrowserWindow, dialog, ipcMain } from 'electron';
+import {app, BrowserWindow, dialog, ipcMain, nativeTheme } from 'electron';
 import './security-restrictions';
 import {restoreOrCreateWindow} from '/@/mainWindow';
 import {writeFileSync, readFileSync, existsSync, readdirSync} from 'fs';
 import {moveSync, ensureDirSync} from 'fs-extra';
 import * as path from 'path';
+
+const lightTheme = {
+  backgroundColor: '#ffffff',
+  titleBarOverlay: {
+    color: '#ff0000',
+    symbolColor: '#333333',
+  },
+};
+
+const darkTheme = {
+  backgroundColor: '#000000',
+  titleBarOverlay: {
+    color: '#00ff00',
+    symbolColor: '#aaaaaa',
+  },
+};
 
 const userDataPath = app.getPath('userData');
 const systemConfigPath = path.join(userDataPath, 'system.json');
@@ -20,8 +36,8 @@ ensureDirSync(systemConfig.appDir);
 const DEFAULT_APP_CONFIG:AppConfig = {
   articleDir: 'articles',
   language: 'en',
+  darkMode: 'system',
 };
-let appConfig:AppConfig;
 
 function getAppDir():string {
   return systemConfig.appDir;
@@ -33,17 +49,32 @@ function getAppConfigPath():string {
 
 function readAppConfig():AppConfig {
   const appConfigPath = getAppConfigPath();
-  appConfig = existsSync(appConfigPath) ? JSON.parse(readFileSync(appConfigPath, {encoding: 'utf-8'})) : {...DEFAULT_APP_CONFIG};
-  return appConfig;
+  return existsSync(appConfigPath) ? {...DEFAULT_APP_CONFIG, ...JSON.parse(readFileSync(appConfigPath, {encoding: 'utf-8'}))} : {...DEFAULT_APP_CONFIG};
 }
 
 function saveUserConfig(data:AppConfig) {
-  appConfig = data;
   const appDir = getAppDir();
   ensureDirSync(appDir);
   const appConfigPath = getAppConfigPath();
   writeFileSync(appConfigPath, JSON.stringify(data), {encoding: 'utf-8'});
+  if(data.darkMode !== nativeTheme.themeSource) {
+    // darkMode is changed
+    nativeTheme.themeSource = data.darkMode;
+    syncNativeTheme();
+  }
 }
+
+function syncNativeTheme() {
+  const colors = nativeTheme.shouldUseDarkColors ? darkTheme : lightTheme;
+  BrowserWindow.getAllWindows().forEach(w => {
+    w.setBackgroundColor(colors.backgroundColor);
+
+  });
+}
+
+nativeTheme.themeSource = readAppConfig().darkMode;
+syncNativeTheme();
+
 
 function transferAppDir(oldDir:string, newDir:string): boolean {
   try {
@@ -190,6 +221,10 @@ ipcMain.on('system', function(event, msg) {
     writeFileSync(systemConfigPath, JSON.stringify(data), {encoding: 'utf-8'});
     systemConfig = data;
     event.returnValue = true;
+    return;
+  }
+  if(msg.event === 'shouldUseDarkColors') {
+    event.returnValue = nativeTheme.shouldUseDarkColors;
     return;
   }
   if(msg.event === 'loadAppConfig') {

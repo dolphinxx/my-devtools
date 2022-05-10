@@ -37,6 +37,10 @@ function saveAppConfig(data:AppConfig) {
   ipcRenderer.send('system', {event: 'saveAppConfig', data});
 }
 
+function shouldUseDarkColors():boolean {
+  return ipcRenderer.sendSync('system', {event: 'shouldUseDarkColors'});
+}
+
 // Export for types in contracts.d.ts
 export const systems = {
   versions: process.versions,
@@ -49,6 +53,7 @@ export const systems = {
   saveSystemConfig,
   loadAppConfig,
   saveAppConfig,
+  shouldUseDarkColors,
 } as const;
 
 exposeInMainWorld('systems', systems);
