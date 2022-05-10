@@ -1,4 +1,7 @@
 {
+  "punctuation": {
+    "colon": ":"
+  },
   "ui": {
     "language": "Language",
     "title": {
@@ -6,7 +9,8 @@
       "tip": "Tip",
       "info": "Info",
       "warning": "Warning",
-      "error": "Error"
+      "error": "Error",
+      "systemConfig": "System Config"
     },
     "btn": {
       "ok": "OK",
@@ -23,7 +27,8 @@
       "preview": "Preview",
       "calc": "Calc",
       "copy": "Copy",
-      "pick": "Pick"
+      "pick": "Pick",
+      "submit": "Submit"
     },
     "label": {
       "text": "Text:",
@@ -40,7 +45,10 @@
       "encoded": "Encoded:",
       "type": "Type:",
       "algorithm": "Algorithm:",
-      "encrypted": "Encrypted:"
+      "encrypted": "Encrypted:",
+      "appDir": "App Dir:",
+      "articleDir": "Article Dir:",
+      "language": "Language:"
     },
     "level": {
       "low": "Low",
@@ -70,7 +78,8 @@
       },
       "url-encoder": "Url Encoder & Decoder",
       "qrcode": "QR Code Generate & Scan",
-      "article": "Article"
+      "article": "Article",
+      "appConfig": "App Config",
     }
   },
   "message": {

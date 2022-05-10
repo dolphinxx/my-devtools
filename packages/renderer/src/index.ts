@@ -20,7 +20,7 @@ import routes from './routes';
 const i18n = createI18n({
   allowComposition: true,
   legacy: false,
-  locale: localStorage.getItem('locale') || 'en',
+  locale: window.systems.loadAppConfig().language,
   messages,
   // messages: {
   //   'cn': zhCn,
