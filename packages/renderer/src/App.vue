@@ -9,7 +9,7 @@
         >
           <el-scrollbar>
             <el-menu
-              :collapse="isCollapse"
+              :collapse="false"
               router
               :default-active="$route.path"
             >
@@ -111,7 +111,7 @@ const isCollapse = ref(true);
   height: 100%;
   //border-right: solid 1px var(--el-border-color-light);
   &.collapsed {
-    width: 64px;
+    width: 0;
   }
   .el-scrollbar {
     flex: 1;
