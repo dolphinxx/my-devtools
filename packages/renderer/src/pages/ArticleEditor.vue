@@ -2,7 +2,7 @@
   <page-container style="padding: 0;">
     <div>
       <div class="file-path">
-        <span>articles</span>
+        <span style="padding-left: 0.5em;">articles</span>
         <span class="separator">/</span>
         <el-input
           ref="filenameRef"
@@ -25,7 +25,6 @@
 import {onMounted, ref} from 'vue';
 import EasyMDE from 'easymde';
 import 'easymde/dist/easymde.min.css';
-import 'highlight.js/styles/github.css';
 import PageContainer from '/@/components/PageContainer.vue';
 import hljs from 'highlight.js';
 import {ElMessage} from 'element-plus';
@@ -50,7 +49,7 @@ const iconColumns = '<svg class="svg-inline--fa" aria-hidden="true" data-prefix=
 const iconArrowsAlt = '<svg class="svg-inline--fa" aria-hidden="true" data-prefix="fa" data-icon="arrows-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M352.201 425.775l-79.196 79.196c-9.373 9.373-24.568 9.373-33.941 0l-79.196-79.196c-15.119-15.119-4.411-40.971 16.971-40.97h51.162L228 284H127.196v51.162c0 21.382-25.851 32.09-40.971 16.971L7.029 272.937c-9.373-9.373-9.373-24.569 0-33.941L86.225 159.8c15.119-15.119 40.971-4.411 40.971 16.971V228H228V127.196h-51.23c-21.382 0-32.09-25.851-16.971-40.971l79.196-79.196c9.373-9.373 24.568-9.373 33.941 0l79.196 79.196c15.119 15.119 4.411 40.971-16.971 40.971h-51.162V228h100.804v-51.162c0-21.382 25.851-32.09 40.97-16.971l79.196 79.196c9.373 9.373 9.373 24.569 0 33.941L425.773 352.2c-15.119 15.119-40.971 4.411-40.97-16.971V284H284v100.804h51.23c21.382 0 32.09 25.851 16.971 40.971z"></path></svg>';
 const iconUndo = '<svg class="svg-inline--fa" aria-hidden="true" data-prefix="fa" data-icon="undo" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"></path></svg>';
 const iconRedo = '<svg class="svg-inline--fa" aria-hidden="true" data-prefix="fa" data-icon="redo" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M500.333 0h-47.411c-6.853 0-12.314 5.729-11.986 12.574l3.966 82.759C399.416 41.899 331.672 8 256.001 8 119.34 8 7.899 119.526 8 256.187 8.101 393.068 119.096 504 256 504c63.926 0 122.202-24.187 166.178-63.908 5.113-4.618 5.354-12.561.482-17.433l-33.971-33.971c-4.466-4.466-11.64-4.717-16.38-.543C341.308 415.448 300.606 432 256 432c-97.267 0-176-78.716-176-176 0-97.267 78.716-176 176-176 60.892 0 114.506 30.858 146.099 77.8l-101.525-4.865c-6.845-.328-12.574 5.133-12.574 11.986v47.411c0 6.627 5.373 12 12 12h200.333c6.627 0 12-5.373 12-12V12c0-6.627-5.373-12-12-12z"></path></svg>';
-const iconFloppyDisk = '<svg class="svg-inline--fa" aria-hidden="true" data-prefix="fa" data-icon="floppy-disk" role="img"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M433.1 129.1l-83.9-83.9C342.3 38.32 327.1 32 316.1 32H64C28.65 32 0 60.65 0 96v320c0 35.35 28.65 64 64 64h320c35.35 0 64-28.65 64-64V163.9C448 152.9 441.7 137.7 433.1 129.1zM224 416c-35.34 0-64-28.66-64-64s28.66-64 64-64s64 28.66 64 64S259.3 416 224 416zM320 208C320 216.8 312.8 224 304 224h-224C71.16 224 64 216.8 64 208v-96C64 103.2 71.16 96 80 96h224C312.8 96 320 103.2 320 112V208z"/></svg>';
+const iconFloppyDisk = '<svg class="svg-inline--fa" aria-hidden="true" data-prefix="fa" data-icon="floppy-disk" role="img"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M433.1 129.1l-83.9-83.9C342.3 38.32 327.1 32 316.1 32H64C28.65 32 0 60.65 0 96v320c0 35.35 28.65 64 64 64h320c35.35 0 64-28.65 64-64V163.9C448 152.9 441.7 137.7 433.1 129.1zM224 416c-35.34 0-64-28.66-64-64s28.66-64 64-64s64 28.66 64 64S259.3 416 224 416zM320 208C320 216.8 312.8 224 304 224h-224C71.16 224 64 216.8 64 208v-96C64 103.2 71.16 96 80 96h224C312.8 96 320 103.2 320 112V208z"/></svg>';
 
 const {t} = useI18n();
 
@@ -106,6 +105,7 @@ onMounted(() => {
         name: 'save',
         title: 'Save',
         className: 'fa fa-floppy-disk',
+        noDisable: true,
         action: (editor:EasyMDE) => {
           if(!filename.value) {
             ElMessage({
@@ -134,13 +134,38 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .editor-container {
-  background-color: #ffffff;
+  background-color: var(--el-bg-color);
   overflow: hidden;
 }
 </style>
 <style lang="scss">
 .EasyMDEContainer {
+  .editor-toolbar button.active, .editor-toolbar button:hover {
+    background-color: var(--el-border-color-extra-light);
+  }
+  .editor-toolbar.fullscreen {
+    background-color: var(--el-bg-color);
+  }
+  .editor-preview {
+    background-color: var(--el-bg-color);
+  }
+  .CodeMirror {
+    color: inherit;
+    background-color: var(--el-bg-color);
+  }
 }
+.dark .EasyMDEContainer {
+  .editor-preview, .CodeMirror {
+    background-color: rgb(43, 43, 43);
+  }
+  .CodeMirror-cursor {
+    border-color: #ffffff;
+  }
+  .editor-preview {
+    color: rgb(169, 183, 198);
+  }
+}
+
 .svg-inline--fa {
   display: inline-block;
   font-size: inherit;
@@ -183,6 +208,154 @@ svg:not(:root).svg-inline--fa {
   .el-input {
     width: auto;
     min-width: 120px;
+  }
+}
+
+.editor-preview {
+  pre code.hljs, pre code {
+    display: block;
+    overflow-x: auto;
+    padding: 1em
+  }
+
+  code.hljs, pre code {
+    padding: 3px 5px
+  }
+
+  .hljs, pre code {
+    color: #24292e;
+    background: #fff
+  }
+}
+
+.hljs-doctag, .hljs-keyword, .hljs-meta .hljs-keyword, .hljs-template-tag, .hljs-template-variable, .hljs-type, .hljs-variable.language_ {
+  color: #d73a49
+}
+
+.hljs-title, .hljs-title.class_, .hljs-title.class_.inherited__, .hljs-title.function_ {
+  color: #6f42c1
+}
+
+.hljs-attr, .hljs-attribute, .hljs-literal, .hljs-meta, .hljs-number, .hljs-operator, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-id, .hljs-variable {
+  color: #005cc5
+}
+
+.hljs-meta .hljs-string, .hljs-regexp, .hljs-string {
+  color: #032f62
+}
+
+.hljs-built_in, .hljs-symbol {
+  color: #e36209
+}
+
+.hljs-code, .hljs-comment, .hljs-formula {
+  color: #6a737d
+}
+
+.hljs-name, .hljs-quote, .hljs-selector-pseudo, .hljs-selector-tag {
+  color: #22863a
+}
+
+.hljs-subst {
+  color: #24292e
+}
+
+.hljs-section {
+  color: #005cc5;
+  font-weight: 700
+}
+
+.hljs-bullet {
+  color: #735c0f
+}
+
+.hljs-emphasis {
+  color: #24292e;
+  font-style: italic
+}
+
+.hljs-strong {
+  color: #24292e;
+  font-weight: 700
+}
+
+.hljs-addition {
+  color: #22863a;
+  background-color: #f0fff4
+}
+
+.hljs-deletion {
+  color: #b31d28;
+  background-color: #ffeef0
+}
+
+.dark {
+  .editor-preview {
+    .hljs, pre code {
+      color: #c9d1d9;
+      background: #0d1117
+    }
+  }
+
+  .hljs-doctag, .hljs-keyword, .hljs-meta .hljs-keyword, .hljs-template-tag, .hljs-template-variable, .hljs-type, .hljs-variable.language_ {
+    color: #ff7b72
+  }
+
+  .hljs-title, .hljs-title.class_, .hljs-title.class_.inherited__, .hljs-title.function_ {
+    color: #d2a8ff
+  }
+
+  .hljs-attr, .hljs-attribute, .hljs-literal, .hljs-meta, .hljs-number, .hljs-operator, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-id, .hljs-variable {
+    color: #79c0ff
+  }
+
+  .hljs-meta .hljs-string, .hljs-regexp, .hljs-string {
+    color: #a5d6ff
+  }
+
+  .hljs-built_in, .hljs-symbol {
+    color: #ffa657
+  }
+
+  .hljs-code, .hljs-comment, .hljs-formula {
+    color: #8b949e
+  }
+
+  .hljs-name, .hljs-quote, .hljs-selector-pseudo, .hljs-selector-tag {
+    color: #7ee787
+  }
+
+  .hljs-subst {
+    color: #c9d1d9
+  }
+
+  .hljs-section {
+    color: #1f6feb;
+    font-weight: 700
+  }
+
+  .hljs-bullet {
+    color: #f2cc60
+  }
+
+  .hljs-emphasis {
+    color: #c9d1d9;
+    font-style: italic
+  }
+
+  .hljs-strong {
+    color: #c9d1d9;
+    font-weight: 700
+  }
+
+  .hljs-addition {
+    color: #aff5b4;
+    background-color: #033a16
+  }
+
+  .hljs-deletion {
+    color: #ffdcd7;
+    background-color: #67060c
   }
 }
 </style>
