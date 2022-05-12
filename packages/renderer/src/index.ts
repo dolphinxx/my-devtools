@@ -6,12 +6,13 @@ import messages from '@intlify/vite-plugin-vue-i18n/messages';
 // import zhCn from '/@/locales/zh-cn';
 // import enUs from '/@/locales/en-us';
 
-import '/@/styles/index.scss';
 import 'uno.css';
-
+import '/@/styles/element/index.scss';
 // If you want to use ElMessage, import it.
 import 'element-plus/theme-chalk/src/message.scss';
 import 'element-plus/theme-chalk/src/message-box.scss';
+import '/@/styles/index.scss';
+
 import myPlugin from '/@/plugin';
 import {ElMenuItem, ElSubMenu} from 'element-plus';
 import {HomeFilled, Menu, Document} from '@element-plus/icons-vue';

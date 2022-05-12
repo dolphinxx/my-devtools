@@ -31,13 +31,13 @@ const config = {
       // 'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js',
     },
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: '@use "/@/styles/element/index.scss" as *;',
-      },
-    },
-  },
+  // css: {
+  //   preprocessorOptions: {
+  //     scss: {
+  //       additionalData: '@use "/@/styles/element/index.scss" as *;',
+  //     },
+  //   },
+  // },
   plugins: [
     vue(),
     vueI18n({
