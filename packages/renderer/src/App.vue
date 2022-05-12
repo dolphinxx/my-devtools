@@ -52,7 +52,7 @@ import TitleBar from '/@/components/TitleBar.vue';
 
 const showingSystemConfig = ref(false);
 
-const isCollapse = ref(true);
+const isCollapse = ref(false);
 </script>
 
 <!--suppress CssUnknownProperty -->
