@@ -12,12 +12,10 @@
               @change="updateLocale"
             >
               <el-option
-                label="English"
-                value="en"
-              />
-              <el-option
-                label="中文"
-                value="cn"
+                v-for="lang in LANGUAGES"
+                :key="lang"
+                :label="LANGUAGE_MAP[lang]"
+                :value="lang"
               />
             </el-select>
           </el-form-item>
@@ -67,6 +65,8 @@ import {toRaw, computed} from 'vue';
 import {useI18n} from 'vue-i18n';
 import {applyDarkMode} from '/@/global';
 import store from '/@/store';
+import {LANGUAGES, LANGUAGE_MAP} from '/@/constants';
+
 const {t, locale} = useI18n({useScope: 'global'});
 
 const appConfig = computed({
