@@ -1,5 +1,5 @@
 <template>
-  <page-container style="padding: 0;">
+  <page-container page-style="padding: 0;">
     <div>
       <div class="file-path">
         <span style="padding-left: 0.5em;">articles</span>
