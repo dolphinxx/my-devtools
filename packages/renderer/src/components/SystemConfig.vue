@@ -43,6 +43,7 @@ import {computed, ref, toRaw} from 'vue';
 import {useI18n} from 'vue-i18n';
 import {ElMessage} from 'element-plus';
 import type {SetupContext} from '@vue/runtime-core';
+import store from '/@/store';
 
 export default {
   props: {
@@ -55,7 +56,6 @@ export default {
   setup(props:{modelValue:boolean}, context:SetupContext) {
     const {t} = useI18n();
 
-    const systemConfig = ref<SystemConfig>(window.systems.loadSystemConfig());
     const editingConfig = ref<SystemConfig>({appDir: ''});
     const modalVal = computed({
       get() {
@@ -66,23 +66,23 @@ export default {
       },
     });
     function selectDir() {
-      const dir = window.systems.selectFolder(systemConfig.value.appDir);
+      const dir = window.systems.selectFolder(editingConfig.value.appDir);
       if(dir) {
         editingConfig.value.appDir = dir;
       }
     }
 
     function onOpen() {
-      editingConfig.value = {...systemConfig.value};
+      editingConfig.value = {...store.state.systemConfig};
     }
 
     function saveConfig() {
-      if(JSON.stringify(systemConfig.value) === JSON.stringify(editingConfig.value)) {
+      if(JSON.stringify(store.state.systemConfig) === JSON.stringify(editingConfig.value)) {
         modalVal.value = false;
         return;
       }
       if(window.systems.saveSystemConfig(toRaw(editingConfig.value))) {
-        systemConfig.value = {...editingConfig.value};
+        store.commit('updateSystemConfig', editingConfig.value);
         ElMessage({
           type: 'success',
           message: t('message.operation.success'),

@@ -63,11 +63,20 @@
 </template>
 <script lang="ts" setup>
 import PageContainer from '/@/components/PageContainer.vue';
-import {ref, toRaw} from 'vue';
+import {toRaw, computed} from 'vue';
 import {useI18n} from 'vue-i18n';
+import {applyDarkMode} from '/@/global';
+import store from '/@/store';
 const {t, locale} = useI18n({useScope: 'global'});
 
-const appConfig = ref<AppConfig>(window.systems.loadAppConfig());
+const appConfig = computed({
+  get() {
+    return store.state.appConfig;
+  },
+  set(val) {
+    store.commit('updateAppConfig', val);
+  },
+});
 
 function selectDir() {
   const dir = window.systems.selectFolder(appConfig.value.appDir);
@@ -83,14 +92,11 @@ function updateLocale() {
 
 function updateDarkMode() {
   saveConfig();
-  if(window.systems.shouldUseDarkColors()) {
-    document.querySelector('html')?.classList.add('dark');
-  } else {
-    document.querySelector('html')?.classList.remove('dark');
-  }
+  applyDarkMode();
 }
 
 function saveConfig() {
+  store.commit('updateAppConfig', appConfig.value);
   window.systems.saveAppConfig(toRaw(appConfig.value));
 }
 </script>

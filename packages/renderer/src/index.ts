@@ -17,6 +17,7 @@ import {ElMenuItem, ElSubMenu} from 'element-plus';
 import {HomeFilled, Menu, Document} from '@element-plus/icons-vue';
 
 import routes from './routes';
+import store from './store';
 
 if(window.systems.shouldUseDarkColors()) {
   document.querySelector('html')?.classList.add('dark');
@@ -27,7 +28,7 @@ if(window.systems.shouldUseDarkColors()) {
 const i18n = createI18n({
   allowComposition: true,
   legacy: false,
-  locale: window.systems.loadAppConfig().language,
+  locale: store.state.appConfig.language,
   messages,
   // messages: {
   //   'cn': zhCn,
@@ -43,14 +44,14 @@ const router = VueRouter.createRouter({
 });
 
 const app = createApp(App);
+app.use(store);
 app.use(myPlugin);
 app.use(router);
+app.use(i18n);
 app.component('ElMenuItem', ElMenuItem);
 app.component('ElSubMenu', ElSubMenu);
 app.component('IconMenu', Menu);
 app.component('IconHomeFilled', HomeFilled);
 app.component('IconDocument', Document);
-app.use(i18n);
-console.log(app.config.$t);
 app.mount('#app');
 
