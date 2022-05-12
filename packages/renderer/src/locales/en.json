@@ -86,6 +86,7 @@
       "qrcode": "QR Code Generate & Scan",
       "article": "Article",
       "appConfig": "App Config",
+      "textDiff": "Text Diff"
     }
   },
   "message": {
@@ -101,5 +102,15 @@
     },
     "missing-file-path": "Missing file path",
     "paste-or-pick-an-image": "Paste or pick an image"
+  },
+  "page": {
+    "textDiff": {
+      "sentence": "Sentence",
+      "line": "Line",
+      "word": "Word",
+      "char": "Char",
+      "json": "JSON",
+      "css": "CSS"
+    }
   }
 }

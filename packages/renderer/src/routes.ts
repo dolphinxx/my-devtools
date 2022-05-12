@@ -12,4 +12,5 @@ export default [
   {path: '/qrcode', component: () => import('/@/pages/QRCode.vue'), meta: {title: 'route.title.qrcode'}},
   {path: '/article', component: () => import('/@/pages/ArticleEditor.vue'), meta: {title: 'route.title.article'}},
   {path: '/app_config', component: () => import('/@/pages/AppConfig.vue'), meta: {title: 'route.title.appConfig'}},
+  {path: '/text-diff', component: () => import('/@/pages/TextDiffer.vue'), meta: {title: 'route.title.textDiff'}},
 ];

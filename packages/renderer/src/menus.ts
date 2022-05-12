@@ -35,6 +35,10 @@ export default [
         route: {path: '/qrcode'},
       },
       {
+        name: 'route.title.textDiff',
+        route: {path: '/text-diff'},
+      },
+      {
         name: 'route.title.formatters',
         children: [
           {

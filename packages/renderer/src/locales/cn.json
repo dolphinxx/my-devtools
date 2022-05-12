@@ -85,7 +85,8 @@
       "url-encoder": "Url 编码 & 解码",
       "qrcode": "QR Code 生成 & 扫描",
       "article": "文章",
-      "appConfig": "应用配置"
+      "appConfig": "应用配置",
+      "textDiff": "文本比较"
     }
   },
   "message": {
@@ -101,5 +102,15 @@
     },
     "missing-file-path": "缺少文件路径",
     "paste-or-pick-an-image": "粘贴或选取一个图片"
+  },
+  "page": {
+    "textDiff": {
+      "sentence": "逐句",
+      "line": "逐行",
+      "word": "逐词",
+      "char": "逐字",
+      "json": "JSON",
+      "css": "CSS"
+    }
   }
 }

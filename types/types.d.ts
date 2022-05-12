@@ -23,3 +23,9 @@ type AppConfig = {
   language: string;
   darkMode: 'system'|'light'|'dark';
 };
+
+type DiffLine = {
+  added: boolean;
+  removed: boolean;
+  changes: Change[];
+}
