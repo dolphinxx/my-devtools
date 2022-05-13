@@ -35,10 +35,9 @@
   </div>
 </template>
 <script lang="ts">
-import type {Change} from 'diff';
-const escapeHtml = (unsafe) => {
-  return unsafe.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll('\'', '&#039;');
-};
+// const escapeHtml = (unsafe) => {
+//   return unsafe.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll('\'', '&#039;');
+// };
 export default {
   props: {
     data: {

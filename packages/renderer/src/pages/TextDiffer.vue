@@ -76,6 +76,11 @@ import {EditorView, EditorState, basicSetup} from '@codemirror/basic-setup';
 
 // import txt1 from '/@/data/diff1.txt?raw';
 // import txt2 from '/@/data/diff2.txt?raw';
+type DiffLine = {
+  added: boolean;
+  removed: boolean;
+  changes: Change[];
+}
 
 const {t} = useI18n();
 
