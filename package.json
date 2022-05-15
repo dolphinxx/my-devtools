@@ -22,6 +22,7 @@
     "typecheck": "npm run typecheck:main && npm run typecheck:preload && npm run typecheck:renderer"
   },
   "devDependencies": {
+    "@iconify-json/codicon": "^1.1.7",
     "@iconify-json/icon-park-outline": "^1.1.2",
     "@iconify-json/mdi": "^1.1.10",
     "@iconify-json/system-uicons": "^1.1.2",

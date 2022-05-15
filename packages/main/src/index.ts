@@ -180,7 +180,7 @@ ipcMain.on('system', function(event, msg) {
     const window = BrowserWindow.getFocusedWindow();
     if(window) {
       if(window.isMaximized()) {
-        window.unmaximize();
+        window.restore();
       } else {
         window.maximize();
       }
@@ -244,6 +244,9 @@ ipcMain.on('system', function(event, msg) {
   if(msg.event === 'openToolsWindow') {
     createToolsWindow();
     return;
+  }
+  if(msg.event === 'isMaximized') {
+    event.returnValue = BrowserWindow.getFocusedWindow()?.isMaximized() ?? false;
   }
 });
 

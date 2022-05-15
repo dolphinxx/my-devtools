@@ -59,22 +59,23 @@
     </language-toggle>
     <div class="title-bar-traffic-lights">
       <el-icon
-        class="maximize-btn"
-        @click="maximize"
-      >
-        <icon-circle-plus-filled />
-      </el-icon>
-      <el-icon
         class="minimize-btn"
         @click="minimize"
       >
-        <icon-remove-filled />
+        <icon-chrome-minimize />
+      </el-icon>
+      <el-icon
+        class="maximize-btn"
+        @click="maximize"
+      >
+        <icon-chrome-maximize v-if="!store.state.maximized" />
+        <icon-chrome-restore v-if="store.state.maximized" />
       </el-icon>
       <el-icon
         class="close-btn"
         @click="exit"
       >
-        <icon-circle-close-filled />
+        <icon-chrome-close />
       </el-icon>
     </div>
   </div>
@@ -82,12 +83,8 @@
 <script lang="ts">
 import {
   DArrowLeft as IconDArrowLeft, DArrowRight as IconDArrowRight,
-  CircleCloseFilled as IconCircleCloseFilled,
-  RemoveFilled as IconRemoveFilled,
-  CirclePlusFilled as IconCirclePlusFilled,
   Sunny as IconSunny,
   Moon as IconMoon,
-  Scissor as IconScissor,
 } from '@element-plus/icons-vue';
 
 import {useI18n} from 'vue-i18n';
@@ -95,14 +92,19 @@ import {computed, toRaw} from 'vue';
 import LanguageToggle from '/@/components/LanguageToggle.vue';
 import store from '/@/store';
 import {applyDarkMode} from '/@/global';
+import IconChromeMinimize from '~icons/codicon/chrome-minimize';
+import IconChromeMaximize from '~icons/codicon/chrome-maximize';
+import IconChromeRestore from '~icons/codicon/chrome-restore';
+import IconChromeClose from '~icons/codicon/chrome-close';
 
 export default {
   components: {
     LanguageToggle,
-    IconDArrowLeft, IconDArrowRight, IconCircleCloseFilled,
-    IconRemoveFilled,
-    IconCirclePlusFilled,
-    IconScissor,
+    IconDArrowLeft, IconDArrowRight,
+    IconChromeMinimize,
+    IconChromeMaximize,
+    IconChromeRestore,
+    IconChromeClose,
   },
   props: {
     modelValue: {
@@ -146,6 +148,7 @@ export default {
 
     function maximize() {
       window.systems.maximize();
+      store.dispatch('updateMaximized');
     }
 
     function openToolsWindow() {
@@ -162,6 +165,7 @@ export default {
       openToolsWindow,
       IconSunny,
       IconMoon,
+      store,
     };
   },
 };
@@ -237,6 +241,7 @@ $title-bar-padding: calc(($title-bar-height - $title-bar-content-height) / 2);
         background-color: var(--button-hover-bg-color);
         &.close-btn {
           background-color: var(--el-color-danger);
+          color: #ffffff;
         }
       }
     }

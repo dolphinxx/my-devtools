@@ -18,6 +18,10 @@ function maximize() {
   ipcRenderer.send('system', {event: 'maximize'});
 }
 
+function isMaximized():boolean {
+  return ipcRenderer.sendSync('system', {event: 'isMaximized'});
+}
+
 function saveFile(data: ArrayBuffer | string, name: string) {
   ipcRenderer.send('system', {event: 'saveFile', data, name});
 }
@@ -56,6 +60,7 @@ export const systems = {
   exit,
   minimize,
   maximize,
+  isMaximized,
   saveFile,
   selectFolder,
   loadSystemConfig,
