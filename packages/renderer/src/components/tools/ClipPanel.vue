@@ -13,7 +13,7 @@
         <icon-close @click="cancelSelection" />
       </el-icon>
       <el-icon :title="t('tools.exit')">
-        <icon-cancel @click="exitCapture" />
+        <icon-cancel @click="exitClipping" />
       </el-icon>
     </div>
   </div>
@@ -57,7 +57,7 @@ onUnmounted(() => {
 
 function handleKeyDown(event:KeyboardEvent) {
   if(event.key === 'Escape') {
-    exitCapture();
+    exitClipping();
   }
 }
 
@@ -189,11 +189,11 @@ function copyToClipboard() {
   canvas.setBackgroundColor('transparent');
   window.tools.captureScreen({x: boundingRect.left, y: boundingRect.top, width: boundingRect.width, height: boundingRect.height});
   hasSelection.value = false;
-  exitCapture();
+  exitClipping();
 }
 
-function exitCapture() {
-  window.emitter.emit('capture:exit');
+function exitClipping() {
+  window.emitter.emit('clip:exit');
 }
 
 function confirmObjectBoundary(obj) {

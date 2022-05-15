@@ -1,17 +1,17 @@
 <template>
   <div style="position: fixed;top:0;left:0;right:0;bottom:0;user-select: none;">
-    <clip-panel v-if="capturing" />
+    <clip-panel v-if="clipping" />
     <div
       ref="verticalToolbarRef"
       class="vertical-toolbar"
-      :class="capturing ? 'hidden' : ''"
+      :class="showingToolbar ? '' : 'hidden'"
       :style="toolbarPosition"
       @mousedown="handleStartDrag"
       @touchstart="handleStartDrag"
     >
       <el-icon
         :title="t('tools.clipScreen')"
-        @click="startCapture"
+        @click="startClipping"
       >
         <icon-scissor />
       </el-icon>
@@ -32,7 +32,7 @@
 </template>
 <script lang="ts" setup>
 
-import {computed, ref, onMounted, onUnmounted} from 'vue';
+import {computed, ref, onMounted, onUnmounted, nextTick} from 'vue';
 import {Scissor as IconScissor, Close as IconClose, Camera as IconCamera} from '@element-plus/icons-vue';
 import ClipPanel from '/@/components/tools/ClipPanel.vue';
 import {useI18n} from 'vue-i18n';
@@ -44,12 +44,17 @@ const verticalToolbarRef = ref<HTMLElement>();
 const dragging = ref<''|'toolbar'>('');
 const dragStart = ref({x:0,y:0});
 const dragOriginal = {x:0, y: 0};
-const capturing = ref(false);
+const clipping = ref(false);
+const showingToolbar = ref(true);
 
 const toolbarPosition = computed(() => ({left: `${toolbarOffset.value.x}px`, top: `${toolbarOffset.value.y}px`}));
 window.emitter.on('tools:shortcut', (data) => {
   if(data === 'Alt+CommandOrControl+A') {
-    startCapture();
+    startClipping();
+    return;
+  }
+  if(data === 'PrintScreen') {
+    captureFullScreen();
     return;
   }
   // if(data === 'Escape') {
@@ -61,8 +66,9 @@ window.emitter.on('tools:shortcut', (data) => {
   //   return;
   // }
 });
-window.emitter.on('capture:exit', () => {
-  capturing.value = false;
+window.emitter.on('clip:exit', () => {
+  clipping.value = false;
+  showingToolbar.value = true;
 });
 onMounted(() => {
   document.addEventListener('pointermove', handleDrag);
@@ -103,18 +109,22 @@ function handleDrag(event:TouchEvent|PointerEvent) {
   }
 }
 
-function handleStopDrag(event:MouseEvent|TouchEvent) {
-  console.log(event, dragging.value);
+function handleStopDrag() {
   dragging.value = '';
 }
 
-function startCapture() {
-  capturing.value = true;
-  window.emitter.emit('capture:startSelect');
+function startClipping() {
+  clipping.value = true;
+  showingToolbar.value = false;
+  window.emitter.emit('clip:startSelect');
 }
 
 function captureFullScreen() {
-  window.tools.captureFullScreen();
+  showingToolbar.value = false;
+  window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+    window.tools.captureScreen();
+    showingToolbar.value = true;
+  }));
 }
 
 function exit() {

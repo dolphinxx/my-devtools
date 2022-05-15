@@ -10,19 +10,14 @@ function exitToolsWindow() {
   ipcRenderer.send('tools', {event: 'exitToolsWindow'});
 }
 
-function captureScreen(rect:{x:number, y: number, width: number, height: number}):boolean {
+function captureScreen(rect?:{x:number, y: number, width: number, height: number}):boolean {
   return ipcRenderer.sendSync('tools', {event: 'captureScreen', data: rect});
-}
-
-function captureFullScreen():boolean {
-  return ipcRenderer.sendSync('tools', {event: 'captureFullScreen'});
 }
 
 // Export for types in contracts.d.ts
 export const tools = {
   exitToolsWindow,
   captureScreen,
-  captureFullScreen,
 } as const;
 
 exposeInMainWorld('tools', tools);

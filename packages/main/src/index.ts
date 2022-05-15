@@ -1,4 +1,4 @@
-import {app, BrowserWindow, dialog, globalShortcut, ipcMain, nativeTheme, clipboard, nativeImage} from 'electron';
+import {app, BrowserWindow, dialog, globalShortcut, ipcMain, nativeTheme, clipboard, nativeImage, screen} from 'electron';
 import './security-restrictions';
 import {restoreOrCreateWindow} from '/@/mainWindow';
 import {createToolsWindow} from '/@/toolsWindow';
@@ -250,12 +250,13 @@ ipcMain.on('system', function(event, msg) {
 ipcMain.on('tools', function(event, msg) {
   if(msg.event === 'exitToolsWindow') {
     BrowserWindow.getAllWindows().find(w => w.title === 'Tools')?.close();
-    globalShortcut.unregister('Escape');
+    // globalShortcut.unregister('Escape');
     globalShortcut.unregister('Alt+CommandOrControl+A');
+    globalShortcut.unregister('PrintScreen');
     return;
   }
   if(msg.event === 'captureScreen') {
-    const bitmap = robot.screen.capture(msg.data.x, msg.data.y, msg.data.width, msg.data.height);
+    const bitmap = msg.data ? robot.screen.capture(msg.data.x, msg.data.y, msg.data.width, msg.data.height) : robot.screen.capture(0, 0, screen.getPrimaryDisplay().workAreaSize.width, screen.getPrimaryDisplay().workAreaSize.height);
     const image = nativeImage.createFromBuffer(Buffer.from(bitmap.image), {width: bitmap.width, height: bitmap.height});
     clipboard.writeImage(image);
     event.returnValue = true;

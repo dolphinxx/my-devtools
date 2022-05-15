@@ -42,6 +42,9 @@ export async function createToolsWindow() {
       browserWindow.show();
       browserWindow.webContents.send('tools', {event: 'shortcut', data: 'Alt+CommandOrControl+A'});
     });
+    globalShortcut.register('PrintScreen', () => {
+      browserWindow.webContents.send('tools', {event: 'shortcut', data: 'PrintScreen'});
+    });
     // globalShortcut.register('Escape', () => {
     //   browserWindow.webContents.send('tools', {event: 'shortcut', data: 'Escape'});
     // });
