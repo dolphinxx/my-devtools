@@ -6,6 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BeautifierMinifierCommon: typeof import('./../src/components/BeautifierMinifierCommon.vue')['default']
+    ClipPanel: typeof import('./../src/components/tools/ClipPanel.vue')['default']
     DiffView: typeof import('./../src/components/DiffView.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -21,12 +22,8 @@ declare module '@vue/runtime-core' {
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
-    ElOption: typeof import('element-plus/es')['ElOption']
-    ElRadio: typeof import('element-plus/es')['ElRadio']
-    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
-    ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     LanguageToggle: typeof import('./../src/components/LanguageToggle.vue')['default']
     MenuItems: typeof import('./../src/components/MenuItems.vue')['default']

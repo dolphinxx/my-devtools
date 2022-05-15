@@ -1,11 +1,11 @@
 import {BrowserWindow} from 'electron';
 import {join} from 'path';
 import {URL} from 'url';
-import * as os from 'os';
-
-function isMacOS() {
-  return os.platform() === 'darwin';
-}
+// import * as os from 'os';
+//
+// function isMacOS() {
+//   return os.platform() === 'darwin';
+// }
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
@@ -23,9 +23,9 @@ async function createWindow() {
       preload: join(__dirname, '../../preload/dist/index.cjs'),
     },
   });
-  if(isMacOS()) {
-    browserWindow.setWindowButtonVisibility(true);
-  }
+  // if(isMacOS()) {
+  //   browserWindow.setWindowButtonVisibility(true);
+  // }
 
   /**
    * If you install `show: true` then it can cause issues when trying to close the window.
@@ -36,7 +36,9 @@ async function createWindow() {
   browserWindow.on('ready-to-show', () => {
     browserWindow?.show();
     if (import.meta.env.DEV) {
-      browserWindow?.webContents.openDevTools();
+      browserWindow?.webContents.openDevTools({
+        mode: 'right',
+      });
       // browserWindow?.maximize();
     }
   });

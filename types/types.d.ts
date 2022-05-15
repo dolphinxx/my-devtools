@@ -23,3 +23,9 @@ type AppConfig = {
   language: string;
   darkMode: 'system'|'light'|'dark';
 };
+
+type EmitterEventType = 'tools:shortcut'|'exitCapture'|string;
+
+type EmitterEvent = Record<EmitterEventType, unknown>;
+
+type Position = {x:number, y: number};

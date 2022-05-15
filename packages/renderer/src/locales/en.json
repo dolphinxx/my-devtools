@@ -112,5 +112,13 @@
       "json": "JSON",
       "css": "CSS"
     }
+  },
+  "tools": {
+    "title": "Tools",
+    "clip": "Clip",
+    "captureFullScreen": "Capture full screen",
+    "exit": "Exit",
+    "ok": "Ok",
+    "cancel": "Cancel"
   }
 }

@@ -83,7 +83,10 @@ const config = {
     outDir: 'dist',
     assetsDir: '.',
     rollupOptions: {
-      input: join(PACKAGE_ROOT, 'index.html'),
+      input: {
+        index: join(PACKAGE_ROOT, 'index.html'),
+        tools: join(PACKAGE_ROOT, 'tools.html'),
+      },
       external: [
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],

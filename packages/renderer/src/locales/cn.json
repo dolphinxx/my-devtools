@@ -112,5 +112,13 @@
       "json": "JSON",
       "css": "CSS"
     }
+  },
+  "tools": {
+    "title": "工具",
+    "clipScreen": "截屏",
+    "captureFullScreen": "捕获全屏",
+    "exit": "退出",
+    "ok": "确定",
+    "cancel": "取消"
   }
 }

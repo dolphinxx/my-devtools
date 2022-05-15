@@ -20,6 +20,13 @@ import {HomeFilled, Menu, Document} from '@element-plus/icons-vue';
 import routes from './routes';
 import store from './store';
 
+import mitt from 'mitt';
+
+window.emitter = mitt();
+window.onmessage = function({data}) {
+  window.emitter.emit(`${data.channel}:${data.event}`, data.data);
+};
+
 if(window.systems.shouldUseDarkColors()) {
   document.querySelector('html')?.classList.add('dark');
 } else {

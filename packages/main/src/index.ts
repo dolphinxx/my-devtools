@@ -1,9 +1,11 @@
-import {app, BrowserWindow, dialog, ipcMain, nativeTheme } from 'electron';
+import {app, BrowserWindow, dialog, globalShortcut, ipcMain, nativeTheme, clipboard, nativeImage} from 'electron';
 import './security-restrictions';
 import {restoreOrCreateWindow} from '/@/mainWindow';
+import {createToolsWindow} from '/@/toolsWindow';
 import {writeFileSync, readFileSync, existsSync, readdirSync} from 'fs';
 import {moveSync, ensureDirSync} from 'fs-extra';
 import * as path from 'path';
+import robot from 'robotjs';
 
 const lightTheme = {
   backgroundColor: '#ffffff',
@@ -52,7 +54,7 @@ function readAppConfig():AppConfig {
   return existsSync(appConfigPath) ? {...DEFAULT_APP_CONFIG, ...JSON.parse(readFileSync(appConfigPath, {encoding: 'utf-8'}))} : {...DEFAULT_APP_CONFIG};
 }
 
-function saveUserConfig(data:AppConfig) {
+function saveAppConfig(data:AppConfig) {
   const appDir = getAppDir();
   ensureDirSync(appDir);
   const appConfigPath = getAppConfigPath();
@@ -67,8 +69,9 @@ function saveUserConfig(data:AppConfig) {
 function syncNativeTheme() {
   const colors = nativeTheme.shouldUseDarkColors ? darkTheme : lightTheme;
   BrowserWindow.getAllWindows().forEach(w => {
-    w.setBackgroundColor(colors.backgroundColor);
-
+    if(w.getTitle() !== 'Tools') {
+      w.setBackgroundColor(colors.backgroundColor);
+    }
   });
 }
 
@@ -98,6 +101,8 @@ function transferAppDir(oldDir:string, newDir:string): boolean {
     return false;
   }
 }
+
+// app.disableHardwareAcceleration();
 
 /**
  * Prevent multiple instances
@@ -233,7 +238,27 @@ ipcMain.on('system', function(event, msg) {
   }
   if(msg.event === 'saveAppConfig') {
     const data:AppConfig = msg.data;
-    saveUserConfig(data);
+    saveAppConfig(data);
+    return;
+  }
+  if(msg.event === 'openToolsWindow') {
+    createToolsWindow();
+    return;
+  }
+});
+
+ipcMain.on('tools', function(event, msg) {
+  if(msg.event === 'exitToolsWindow') {
+    BrowserWindow.getAllWindows().find(w => w.title === 'Tools')?.close();
+    globalShortcut.unregister('Escape');
+    globalShortcut.unregister('Alt+CommandOrControl+A');
+    return;
+  }
+  if(msg.event === 'captureScreen') {
+    const bitmap = robot.screen.capture(msg.data.x, msg.data.y, msg.data.width, msg.data.height);
+    const image = nativeImage.createFromBuffer(Buffer.from(bitmap.image), {width: bitmap.width, height: bitmap.height});
+    clipboard.writeImage(image);
+    event.returnValue = true;
     return;
   }
 });

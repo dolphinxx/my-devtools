@@ -54,6 +54,7 @@ const setupMainPackageWatcher = ({config: {server}}) => {
     const port = server.port; // Vite searches for and occupies the first free port: 3000, 3001, 3002 and so on
     const path = '/';
     process.env.VITE_DEV_SERVER_URL = `${protocol}//${host}:${port}${path}`;
+    process.env.VITE_DEV_SERVER_URL_TOOLS = `${protocol}//${host}:${port}/tools.html`;
   }
 
   const logger = createLogger(LOG_LEVEL, {
@@ -73,7 +74,7 @@ const setupMainPackageWatcher = ({config: {server}}) => {
         spawnProcess = null;
       }
 
-      spawnProcess = spawn(String(electronPath), ['.']);
+      spawnProcess = spawn(String(electronPath), [/*'--enable-transparent-visuals', '--disable-gpu', */'.']);
 
       spawnProcess.stdout.on('data', d => d.toString().trim() && logger.warn(d.toString(), {timestamp: true}));
       spawnProcess.stderr.on('data', d => {

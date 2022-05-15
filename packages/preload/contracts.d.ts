@@ -5,6 +5,7 @@ interface Exposed {
   readonly nodeFormatter: Readonly<typeof import('./src/nodeFormatter').nodeFormatter>;
   readonly versions: Readonly<typeof import('./src/versions').versions>;
   readonly systems: Readonly<typeof import('./src/systems').systems>;
+  readonly tools: Readonly<typeof import('./src/tools').tools>;
 }
 
 

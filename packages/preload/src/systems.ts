@@ -1,6 +1,11 @@
 import {exposeInMainWorld} from './exposeInMainWorld';
 import {ipcRenderer} from 'electron';
 
+ipcRenderer.on('system', (event, msg) => {
+  msg.channel = 'system';
+  window.postMessage(msg, '*', event.ports);
+});
+
 function exit() {
   ipcRenderer.send('system', {event: 'exit'});
 }
@@ -41,6 +46,10 @@ function shouldUseDarkColors():boolean {
   return ipcRenderer.sendSync('system', {event: 'shouldUseDarkColors'});
 }
 
+function openToolsWindow() {
+  ipcRenderer.send('system', {event: 'openToolsWindow'});
+}
+
 // Export for types in contracts.d.ts
 export const systems = {
   versions: process.versions,
@@ -54,6 +63,7 @@ export const systems = {
   loadAppConfig,
   saveAppConfig,
   shouldUseDarkColors,
+  openToolsWindow,
 } as const;
 
 exposeInMainWorld('systems', systems);
