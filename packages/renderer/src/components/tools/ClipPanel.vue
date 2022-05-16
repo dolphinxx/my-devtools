@@ -13,7 +13,7 @@
         <icon-close @click="cancelSelection" />
       </el-icon>
       <el-icon :title="t('tools.exit')">
-        <icon-cancel @click="exitClipping" />
+        <i-uicons-backward @click="exitClipping" />
       </el-icon>
     </div>
   </div>
@@ -23,7 +23,7 @@ import {fabric} from 'fabric';
 import type {Canvas, Rect, IEvent} from 'fabric/fabric-impl';
 import {computed, onMounted, onUnmounted, ref} from 'vue';
 import {Close as IconClose, Check as IconCheck} from '@element-plus/icons-vue';
-import IconCancel from '~icons/system-uicons/backward';
+// import IconCancel from '~icons/system-uicons/backward';
 import {useI18n} from 'vue-i18n';
 const {t} = useI18n();
 

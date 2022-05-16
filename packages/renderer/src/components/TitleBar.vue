@@ -62,20 +62,20 @@
         class="minimize-btn"
         @click="minimize"
       >
-        <icon-chrome-minimize />
+        <i-codicon-chrome-minimize />
       </el-icon>
       <el-icon
         class="maximize-btn"
         @click="maximize"
       >
-        <icon-chrome-maximize v-if="!store.state.maximized" />
-        <icon-chrome-restore v-if="store.state.maximized" />
+        <i-codicon-chrome-maximize v-if="!store.state.maximized" />
+        <i-codicon-chrome-restore v-if="store.state.maximized" />
       </el-icon>
       <el-icon
         class="close-btn"
         @click="exit"
       >
-        <icon-chrome-close />
+        <i-codicon-chrome-close />
       </el-icon>
     </div>
   </div>
@@ -92,10 +92,10 @@ import {computed, toRaw} from 'vue';
 import LanguageToggle from '/@/components/LanguageToggle.vue';
 import store from '/@/store';
 import {applyDarkMode} from '/@/global';
-import IconChromeMinimize from '~icons/codicon/chrome-minimize';
-import IconChromeMaximize from '~icons/codicon/chrome-maximize';
-import IconChromeRestore from '~icons/codicon/chrome-restore';
-import IconChromeClose from '~icons/codicon/chrome-close';
+// import IconChromeMinimize from '~icons/codicon/chrome-minimize';
+// import IconChromeMaximize from '~icons/codicon/chrome-maximize';
+// import IconChromeRestore from '~icons/codicon/chrome-restore';
+// import IconChromeClose from '~icons/codicon/chrome-close';
 
 const props = defineProps({
   modelValue: {
