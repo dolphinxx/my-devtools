@@ -79,9 +79,9 @@ const appConfig = computed({
 });
 
 function selectDir() {
-  const dir = window.systems.selectFolder(appConfig.value.appDir);
+  const dir = window.systems.selectFolder(appConfig.value.articleDir);
   if(dir) {
-    appConfig.value.appDir = dir;
+    appConfig.value.articleDir = dir;
   }
 }
 
