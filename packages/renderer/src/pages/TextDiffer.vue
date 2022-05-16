@@ -68,7 +68,7 @@
 import PageContainer from '/@/components/PageContainer.vue';
 import {ref, onMounted} from 'vue';
 import {useI18n} from 'vue-i18n';
-import {diffSentences, diffLines, diffWords, diffChars, diffJson, diffCss} from 'diff/lib/index.es6.js';
+import {diffSentences, diffLines, diffWords, diffChars, diffJson, diffCss} from 'diff';
 import {ElMessage} from 'element-plus';
 import type {Change} from 'diff';
 import DiffView from '/@/components/DiffView.vue';
@@ -95,7 +95,7 @@ let leftEditor:EditorView, rightEditor:EditorView;
 
 onMounted(() => {
   leftEditor = new EditorView({
-    lineWrapping: true,
+    // lineWrapping: true,
     state: EditorState.create({
       // doc: txt1,
       extensions: [basicSetup],
@@ -103,7 +103,7 @@ onMounted(() => {
     parent: leftRef.value,
   });
   rightEditor = new EditorView({
-    lineWrapping: true,
+    // lineWrapping: true,
     state: EditorState.create({
       // doc: txt2,
       extensions: [basicSetup],
