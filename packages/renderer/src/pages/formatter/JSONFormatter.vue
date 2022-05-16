@@ -1,6 +1,5 @@
 <template>
   <beautifier-minifier-common
-    title="JSON"
     :format="format"
     :minify="minify"
   />

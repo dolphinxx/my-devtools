@@ -38,71 +38,60 @@
     </template>
   </el-dialog>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import {computed, ref, toRaw} from 'vue';
 import {useI18n} from 'vue-i18n';
 import {ElMessage} from 'element-plus';
-import type {SetupContext} from '@vue/runtime-core';
 import store from '/@/store';
 
-export default {
-  props: {
-    modelValue: {
-      type: Boolean,
-      required: true,
-    },
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    required: true,
   },
-  emits: ['update:modelValue'],
-  setup(props:{modelValue:boolean}, context:SetupContext) {
-    const {t} = useI18n();
+});
 
-    const editingConfig = ref<SystemConfig>({appDir: ''});
-    const modalVal = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(val) {
-        context.emit('update:modelValue', val);
-      },
+const emit = defineEmits(['update:modelValue']);
+
+const {t} = useI18n();
+
+const editingConfig = ref<SystemConfig>({appDir: ''});
+const modalVal = computed<boolean>({
+  get() {
+    return props.modelValue;
+  },
+  set(val) {
+    emit('update:modelValue', val);
+  },
+});
+function selectDir() {
+  const dir = window.systems.selectFolder(editingConfig.value.appDir);
+  if(dir) {
+    editingConfig.value.appDir = dir;
+  }
+}
+
+function onOpen() {
+  editingConfig.value = {...store.state.systemConfig};
+}
+
+function saveConfig() {
+  if(JSON.stringify(store.state.systemConfig) === JSON.stringify(editingConfig.value)) {
+    modalVal.value = false;
+    return;
+  }
+  if(window.systems.saveSystemConfig(toRaw(editingConfig.value))) {
+    store.commit('updateSystemConfig', editingConfig.value);
+    ElMessage({
+      type: 'success',
+      message: t('message.operation.success'),
     });
-    function selectDir() {
-      const dir = window.systems.selectFolder(editingConfig.value.appDir);
-      if(dir) {
-        editingConfig.value.appDir = dir;
-      }
-    }
-
-    function onOpen() {
-      editingConfig.value = {...store.state.systemConfig};
-    }
-
-    function saveConfig() {
-      if(JSON.stringify(store.state.systemConfig) === JSON.stringify(editingConfig.value)) {
-        modalVal.value = false;
-        return;
-      }
-      if(window.systems.saveSystemConfig(toRaw(editingConfig.value))) {
-        store.commit('updateSystemConfig', editingConfig.value);
-        ElMessage({
-          type: 'success',
-          message: t('message.operation.success'),
-        });
-        modalVal.value = false;
-      } else {
-        ElMessage({
-          type: 'error',
-          message: t('message.operation.failed'),
-        });
-      }
-    }
-    return {
-      t,
-      editingConfig,
-      modalVal,
-      selectDir,
-      onOpen,
-      saveConfig,
-    };
-  },
-};
+    modalVal.value = false;
+  } else {
+    ElMessage({
+      type: 'error',
+      message: t('message.operation.failed'),
+    });
+  }
+}
 </script>

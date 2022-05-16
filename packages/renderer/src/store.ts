@@ -2,8 +2,8 @@ import {createStore} from 'vuex';
 
 const store = createStore({
   state: {
-    systemConfig: window.systems.loadSystemConfig(),
-    appConfig: window.systems.loadAppConfig(),
+    systemConfig: window.systems.loadSystemConfig() as SystemConfig,
+    appConfig: window.systems.loadAppConfig() as AppConfig,
     maximized: window.systems.isMaximized(),
   },
   mutations: {
@@ -16,7 +16,7 @@ const store = createStore({
     updateAppConfig(state, payload: AppConfig) {
       state.appConfig = payload;
     },
-    updateLanguage(state, payload: string) {
+    updateLanguage(state, payload: Language) {
       state.appConfig.language = payload;
     },
     updateDark(state, payload: AppConfig['darkMode']) {

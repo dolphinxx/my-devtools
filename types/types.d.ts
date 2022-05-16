@@ -18,9 +18,11 @@ type SystemConfig = {
   appDir: string;
 };
 
+type Language = 'cn'|'en';
+
 type AppConfig = {
   articleDir: string;
-  language: string;
+  language: Language;
   darkMode: 'system'|'light'|'dark';
 };
 

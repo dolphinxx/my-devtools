@@ -1,6 +1,5 @@
 <template>
   <beautifier-minifier-common
-    title="JS"
     :format="format"
     :minify="minify"
   />

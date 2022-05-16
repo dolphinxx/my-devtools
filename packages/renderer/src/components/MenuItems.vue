@@ -23,27 +23,20 @@
     />
   </component>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import type {PropType} from 'vue';
 import {useI18n} from 'vue-i18n';
 
-export default {
-  name: 'MenuItems',
-  props: {
-    data: {
-      type: Array as PropType<MenuDefinition[]>,
-      required: true,
-    },
-    index: {
-      type: String,
-      required: true,
-    },
+defineProps({
+  data: {
+    type: Array as PropType<MenuDefinition[]>,
+    required: true,
   },
-  setup() {
-    const {t} = useI18n();
-    return {
-      t,
-    };
+  index: {
+    type: String,
+    required: true,
   },
-};
+});
+
+const {t} = useI18n();
 </script>

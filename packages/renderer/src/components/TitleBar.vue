@@ -80,7 +80,7 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import {
   DArrowLeft as IconDArrowLeft, DArrowRight as IconDArrowRight,
   Sunny as IconSunny,
@@ -97,78 +97,54 @@ import IconChromeMaximize from '~icons/codicon/chrome-maximize';
 import IconChromeRestore from '~icons/codicon/chrome-restore';
 import IconChromeClose from '~icons/codicon/chrome-close';
 
-export default {
-  components: {
-    LanguageToggle,
-    IconDArrowLeft, IconDArrowRight,
-    IconChromeMinimize,
-    IconChromeMaximize,
-    IconChromeRestore,
-    IconChromeClose,
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    required: true,
   },
-  props: {
-    modelValue: {
-      type: Boolean,
-      required: true,
-    },
+});
+const emit = defineEmits(['update:modelValue']);
+
+const {t} = useI18n({
+  useScope: 'global',
+});
+
+const value = computed({
+  get() {
+    return props.modelValue;
   },
-  emits: ['update:modelValue'],
-  setup(props, context) {
-    const {t} = useI18n({
-      useScope: 'global',
-    });
-
-    const value = computed({
-      get() {
-        return props.modelValue;
-      },
-      set(v) {
-        context.emit('update:modelValue', v);
-      },
-    });
-
-    const darkMode = computed({
-      get() {
-        return store.state.appConfig.darkMode === 'dark';
-      },
-      set(val) {
-        store.commit('updateDark', val ? 'dark' : 'light');
-        window.systems.saveAppConfig(toRaw(store.state.appConfig));
-        applyDarkMode();
-      },
-    });
-
-    function exit() {
-      window.systems.exit();
-    }
-
-    function minimize() {
-      window.systems.minimize();
-    }
-
-    function maximize() {
-      window.systems.maximize();
-      store.dispatch('updateMaximized');
-    }
-
-    function openToolsWindow() {
-      window.systems.openToolsWindow();
-    }
-
-    return {
-      t,
-      value,
-      darkMode,
-      exit,
-      minimize,
-      maximize,
-      openToolsWindow,
-      IconSunny,
-      IconMoon,
-      store,
-    };
+  set(v) {
+    emit('update:modelValue', v);
   },
-};
+});
+
+const darkMode = computed<boolean>({
+  get() {
+    return store.state.appConfig.darkMode === 'dark';
+  },
+  set(val:boolean) {
+    store.commit('updateDark', val ? 'dark' : 'light');
+    window.systems.saveAppConfig(toRaw(store.state.appConfig));
+    applyDarkMode();
+  },
+});
+
+function exit() {
+  window.systems.exit();
+}
+
+function minimize() {
+  window.systems.minimize();
+}
+
+function maximize() {
+  window.systems.maximize();
+  store.dispatch('updateMaximized');
+}
+
+function openToolsWindow() {
+  window.systems.openToolsWindow();
+}
 </script>
 
 <style lang="scss" scoped>

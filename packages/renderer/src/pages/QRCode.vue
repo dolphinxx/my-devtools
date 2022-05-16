@@ -188,7 +188,7 @@
           </div>
         </section>
         <div class="preview-toolbar">
-          <el-button @click="inputFileRef.input?.click()">
+          <el-button @click="clickInputFile">
             {{ t('ui.btn.pick') }}
           </el-button>
           <el-input
@@ -261,6 +261,10 @@ watch(inputImage, (v) => {
   }
 });
 
+function clickInputFile() {
+  inputFileRef.value?.input?.click();
+}
+
 function generate() {
   generated.value = false;
   if(!text.value || !canvasRef.value) {
@@ -313,6 +317,9 @@ function save() {
 
 function copyGenerated() {
   canvasRef.value?.toBlob((blob) => {
+    if(!blob) {
+      return;
+    }
     navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]).then(() => ElMessage({
       type: 'success',
       message: t('message.operation.success'),

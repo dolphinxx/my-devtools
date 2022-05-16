@@ -6,7 +6,7 @@
         <el-dropdown-item
           v-for="lang in LANGUAGES"
           :key="lang"
-          :class="$store.state.appConfig.language === lang ? 'active' : ''"
+          :class="store.state.appConfig.language === lang ? 'active' : ''"
           @click="updateLanguage(lang)"
         >
           {{ LANGUAGE_MAP[lang] }}
@@ -22,7 +22,7 @@ import {toRaw} from 'vue';
 import {useI18n} from 'vue-i18n';
 const {locale} = useI18n({useScope: 'global'});
 
-function updateLanguage(lang) {
+function updateLanguage(lang:string) {
   if(store.state.appConfig.language === lang) {
     return;
   }

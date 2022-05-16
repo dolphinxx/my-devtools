@@ -45,69 +45,55 @@
   </page-container>
 </template>
 
-<script lang="ts">
-import {ref} from 'vue';
+<script lang="ts" setup>
+import type {PropType} from 'vue';
+import {ref, defineProps} from 'vue';
 import {ElMessage} from 'element-plus';
 import PageContainer from '/@/components/PageContainer.vue';
 import {useI18n} from 'vue-i18n';
 
-export default {
-  components: {PageContainer},
-  props: {
-    title: {type: String, required: true},
-    format: {type: Function, required: true},
-    minify: {type: Function, required: true},
-  },
-  setup(props:{format:FormatterFn, minify: FormatterFn}) {
-    const {t} = useI18n();
-    const input = ref('');
-    const output = ref('');
-    const warnings = ref<string[]>([]);
+const props = defineProps({
+  format: {type: Function as PropType<FormatterFn>, required: true},
+  minify: {type: Function as PropType<FormatterFn>, required: true},
+});
 
-    async function doFormat() {
-      warnings.value = [];
-      try {
-        const r = props.format(input.value);
-        const result: FormatResult = r instanceof Promise ? await r : r;
-        output.value = result.code||'';
-        if (result.warnings && result.warnings.length > 0) {
-          warnings.value = result.warnings;
-        }
-      } catch (e) {
-        ElMessage({
-          message: e instanceof Error ? e.message : String(e),
-          type: 'error',
-        });
-      }
+const {t} = useI18n();
+const input = ref('');
+const output = ref('');
+const warnings = ref<string[]>([]);
+
+async function doFormat() {
+  warnings.value = [];
+  try {
+    const r = props.format(input.value);
+    const result: FormatResult = r instanceof Promise ? await r : r;
+    output.value = result.code||'';
+    if (result.warnings && result.warnings.length > 0) {
+      warnings.value = result.warnings;
     }
+  } catch (e) {
+    ElMessage({
+      message: e instanceof Error ? e.message : String(e),
+      type: 'error',
+    });
+  }
+}
 
-    async function doMinify() {
-      warnings.value = [];
-      try {
-        const r = props.minify(input.value);
-        const result: FormatResult = r instanceof Promise ? await r : r;
-        output.value = result.code||'';
-        if (result.warnings && result.warnings.length > 0) {
-          warnings.value = result.warnings;
-        }
-      } catch (e) {
-        ElMessage({
-          message: e instanceof Error ? e.message : String(e),
-          type: 'error',
-        });
-      }
+async function doMinify() {
+  warnings.value = [];
+  try {
+    const r = props.minify(input.value);
+    const result: FormatResult = r instanceof Promise ? await r : r;
+    output.value = result.code||'';
+    if (result.warnings && result.warnings.length > 0) {
+      warnings.value = result.warnings;
     }
-
-    return {
-      t,
-      input,
-      output,
-      warnings,
-      doFormat,
-      doMinify,
-    };
-  },
-};
-
+  } catch (e) {
+    ElMessage({
+      message: e instanceof Error ? e.message : String(e),
+      type: 'error',
+    });
+  }
+}
 
 </script>

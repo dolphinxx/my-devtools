@@ -11,18 +11,17 @@
     </div>
   </el-scrollbar>
 </template>
-<script lang="ts">
-export default {
-  name: 'PageContainer',
-  props: {
-    pageStyle: {
-      type: [String, Object],
-      default: '',
-    },
-    scrollable: {
-      type: Boolean,
-      default: true,
-    },
+<script lang="ts" setup>
+import {defineProps} from 'vue';
+
+defineProps({
+  pageStyle: {
+    type: [String, Object],
+    default: '',
   },
-};
+  scrollable: {
+    type: Boolean,
+    default: true,
+  },
+});
 </script>

@@ -5,7 +5,7 @@ import {createToolsWindow} from '/@/toolsWindow';
 import {writeFileSync, readFileSync, existsSync, readdirSync} from 'fs';
 import {moveSync, ensureDirSync} from 'fs-extra';
 import * as path from 'path';
-import robot from 'robotjs';
+import * as robot from 'robotjs';
 
 const lightTheme = {
   backgroundColor: '#ffffff',

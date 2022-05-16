@@ -69,7 +69,7 @@ import {LANGUAGES, LANGUAGE_MAP} from '/@/constants';
 
 const {t, locale} = useI18n({useScope: 'global'});
 
-const appConfig = computed({
+const appConfig = computed<AppConfig>({
   get() {
     return store.state.appConfig;
   },

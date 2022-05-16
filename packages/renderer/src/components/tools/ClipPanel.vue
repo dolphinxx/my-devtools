@@ -65,8 +65,8 @@ function initSelection() {
   if(!canvas) {
     return;
   }
-  fabric.util.addListener(canvas.upperCanvasEl, 'dblclick', function (e) {
-    if(canvas.findTarget(e) === selectionRect) {
+  fabric.util.addListener(canvas.upperCanvasEl, 'dblclick', function (e:Event) {
+    if(canvas?.findTarget(e, false) === selectionRect) {
       copyToClipboard();
     }
   });
@@ -134,7 +134,7 @@ function initSelection() {
     }
   });
   canvas.on('after:render', function () {
-    if (!canvas || !selectionRect) {
+    if (!canvas || canvas.width === undefined || canvas.height === undefined || !selectionRect) {
       return;
     }
     const ctx = canvas.getContext();
@@ -186,7 +186,8 @@ function copyToClipboard() {
   }
   const boundingRect = selectionRect.getBoundingRect();
   cancelSelection();
-  canvas.setBackgroundColor('transparent');
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  canvas.setBackgroundColor('transparent', () => {});
   window.tools.captureScreen({x: boundingRect.left, y: boundingRect.top, width: boundingRect.width, height: boundingRect.height});
   hasSelection.value = false;
   exitClipping();
@@ -196,8 +197,10 @@ function exitClipping() {
   window.emitter.emit('clip:exit');
 }
 
-function confirmObjectBoundary(obj) {
+function confirmObjectBoundary(obj:fabric.Object) {
   obj.setCoords();
+  const canvasWidth = obj.canvas?.width??0;
+  const canvasHeight = obj.canvas?.height??0;
   const boundingRect = obj.getBoundingRect();
   if (boundingRect.top < 0) {
     obj.top = 0;
@@ -205,22 +208,22 @@ function confirmObjectBoundary(obj) {
   if(boundingRect.left < 0) {
     obj.left = 0;
   }
-  if (boundingRect.top + boundingRect.height > obj.canvas.height) {
-    obj.top = obj.canvas.height - boundingRect.height;
+  if (boundingRect.top + boundingRect.height > canvasHeight) {
+    obj.top = canvasHeight - boundingRect.height;
   }
-  if (boundingRect.left + boundingRect.width > obj.canvas.width) {
-    obj.left = obj.canvas.width - boundingRect.width;
+  if (boundingRect.left + boundingRect.width > canvasWidth) {
+    obj.left = canvasWidth - boundingRect.width;
   }
 }
 
 function updateClipToolbarPosition() {
-  if(selecting.value || !selectionRect) {
+  if(selecting.value || !selectionRect || !selectionRect.canvas) {
     return;
   }
   const boundingRect = selectionRect.getBoundingRect();
   clipToolbarOffset.value = {
-    x: Math.min(Math.max(0, boundingRect.left), selectionRect.canvas.width - 60),
-    y: Math.min(Math.max(0, boundingRect.top + boundingRect.height + 20), selectionRect.canvas.height - 64),
+    x: Math.min(Math.max(0, boundingRect.left), selectionRect.canvas.width??0 - 60),
+    y: Math.min(Math.max(0, boundingRect.top + boundingRect.height + 20), selectionRect.canvas.height??0 - 64),
   };
 }
 </script>

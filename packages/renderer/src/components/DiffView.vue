@@ -34,34 +34,30 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 // const escapeHtml = (unsafe) => {
 //   return unsafe.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll('\'', '&#039;');
 // };
-export default {
-  props: {
-    data: {
-      required: true,
-      type: Array,
-    },
-    reverse: {
-      type: Boolean,
-      default: false,
-    },
+
+import type {PropType} from 'vue';
+import type {Change} from 'diff';
+
+type DiffLine = {
+  added: boolean;
+  removed: boolean;
+  changes: Change[];
+}
+
+defineProps({
+  data: {
+    required: true,
+    type: Array as PropType<DiffLine[]>,
   },
-  // setup(props:{data:Change[], reverse: boolean}) {
-  //   const result:Change[] = [];
-  //   props.data.forEach((change:Change) => {
-  //     if(change.value.indexOf('\n') === -1) {
-  //       result.push({...change, value: escapeHtml(change.value)});
-  //     } else {
-  //       change.value.split('\n').forEach(b => {
-  //         result.push({...change, value: escapeHtml(b), })
-  //       });
-  //     }
-  //   });
-  // },
-};
+  reverse: {
+    type: Boolean,
+    default: false,
+  },
+});
 </script>
 <style lang="scss" scoped>
 .diff-view {
