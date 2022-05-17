@@ -93,9 +93,14 @@ const config = {
         index: join(PACKAGE_ROOT, 'index.html'),
         tools: join(PACKAGE_ROOT, 'tools.html'),
       },
-      external: [
-        ...builtinModules.flatMap(p => [p, `node:${p}`]),
-      ],
+      // external: [
+      //   ...builtinModules.flatMap(p => [p, `node:${p}`]),
+      // ],
+      output: {
+        globals: {
+          ...builtinModules.flatMap(p => [p, `node:${p}`]),
+        },
+      },
     },
     emptyOutDir: true,
     brotliSize: false,
