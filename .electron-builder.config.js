@@ -18,6 +18,8 @@ const config = {
   extraMetadata: {
     version: process.env.VITE_APP_VERSION,
   },
+  // using prebuild:main hook to only rebuild necessary native modules.
+  npmRebuild: false,
 };
 
 module.exports = config;
