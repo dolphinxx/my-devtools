@@ -149,7 +149,6 @@ function diff() {
     let added = false;
     let removed = false;
     doDiff(mode.value, leftEditor.state.doc.toString(), rightEditor.state.doc.toString()).forEach(_ => {
-      console.log(JSON.stringify(_));
       if(_.added) {
         addedCount++;
       }

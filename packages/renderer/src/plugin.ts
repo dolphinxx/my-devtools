@@ -4,7 +4,6 @@ export default {
   install(app: App) {
     Object.defineProperty(app.config.globalProperties, '$selectText', {
       value: (e: FocusEvent) => {
-        console.log('selectText called');
         if (e.target) {
           if (e.target instanceof HTMLInputElement) {
             e.target.select();

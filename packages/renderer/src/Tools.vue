@@ -32,7 +32,7 @@
 </template>
 <script lang="ts" setup>
 
-import {computed, ref, onMounted, onUnmounted, nextTick} from 'vue';
+import {computed, ref, onMounted, onUnmounted} from 'vue';
 import {Scissor as IconScissor, Close as IconClose, Camera as IconCamera} from '@element-plus/icons-vue';
 import ClipPanel from '/@/components/tools/ClipPanel.vue';
 import {useI18n} from 'vue-i18n';
@@ -82,7 +82,6 @@ onUnmounted(() => {
 });
 
 function handleStartDrag(event:MouseEvent|TouchEvent) {
-  console.log(event);
   if(event instanceof TouchEvent) {
     dragStart.value = {x: event.touches[0].clientX, y: event.touches[0].clientY};
   } else {

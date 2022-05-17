@@ -239,7 +239,6 @@ const scanResult = ref('');
 
 onMounted(() => {
   inputRef.value?.addEventListener('paste', function(e:ClipboardEvent) {
-    console.log(e);
     const items:DataTransferItem[] = [].slice.call(e.clipboardData?.items).filter((item:DataTransferItem) => item.type.indexOf('image') !== -1);
     if(items.length === 0) {
       return;
