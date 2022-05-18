@@ -119,6 +119,10 @@
     "captureFullScreen": "Capture full screen",
     "exit": "Exit",
     "ok": "Ok",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "close": "Close",
+    "recognizeText": "Recognize text",
+    "marks": "Marks",
+    "text": "Text"
   }
 }

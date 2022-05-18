@@ -6,6 +6,7 @@ import {writeFileSync, readFileSync, existsSync, readdirSync} from 'fs';
 import {moveSync, ensureDirSync} from 'fs-extra';
 import * as path from 'path';
 import * as robot from 'robotjs';
+import {recognizeText} from '/@/ocr';
 
 const lightTheme = {
   backgroundColor: '#ffffff',
@@ -39,6 +40,7 @@ const DEFAULT_APP_CONFIG:AppConfig = {
   articleDir: 'articles',
   language: 'en',
   darkMode: 'system',
+  tesseractLangDir: 'tesseract/lang-data',
 };
 
 function getAppDir():string {
@@ -250,9 +252,13 @@ ipcMain.on('system', function(event, msg) {
   }
 });
 
+function getToolsWindow(): Electron.BrowserWindow|undefined {
+  return BrowserWindow.getAllWindows().find(w => w.title === 'Tools');
+}
+
 ipcMain.on('tools', function(event, msg) {
   if(msg.event === 'exitToolsWindow') {
-    BrowserWindow.getAllWindows().find(w => w.title === 'Tools')?.close();
+    getToolsWindow()?.close();
     // globalShortcut.unregister('Escape');
     globalShortcut.unregister('Alt+CommandOrControl+A');
     globalShortcut.unregister('PrintScreen');
@@ -265,4 +271,16 @@ ipcMain.on('tools', function(event, msg) {
     event.returnValue = true;
     return;
   }
+  if(msg.event === 'recognizeText') {
+    const langDir = path.resolve(getAppDir(), readAppConfig().tesseractLangDir);
+    recognizeText(msg.data, langDir).then(result => {
+      console.log(`recognize result: ${result}`);
+      getToolsWindow()?.webContents.send('tools', {event: 'recognizeText:success', data: result});
+    }).catch(e => {
+      getToolsWindow()?.webContents.send('tools', {event: 'message', data: {message: e instanceof Error ? e.message : String(e), type: 'error'}});
+    });
+    return;
+  }
 });
+
+

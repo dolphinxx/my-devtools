@@ -20,7 +20,8 @@
     "typecheck:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
     "typecheck:renderer": "vue-tsc --noEmit -p packages/renderer/tsconfig.json",
     "typecheck": "npm run typecheck:main && npm run typecheck:preload && npm run typecheck:renderer",
-    "prebuild:main": "electron-rebuild --only robotjs"
+    "prebuild:main": "electron-rebuild --only robotjs && node scripts/hack_main.js",
+    "prewatch": "yarn prebuild:main"
   },
   "devDependencies": {
     "@iconify-json/codicon": "^1.1.7",
@@ -35,6 +36,7 @@
     "@types/js-beautify": "^1.13.3",
     "@types/minify": "^8.0.0",
     "@types/qrcode": "^1.4.2",
+    "@types/request": "^2.48.8",
     "@types/terser": "^3.12.0",
     "@types/uglify-js": "^3.13.2",
     "@typescript-eslint/eslint-plugin": "5.12.1",
@@ -81,8 +83,10 @@
     "mitt": "^3.0.0",
     "qr-scanner": "^1.4.1",
     "qrcode": "^1.5.0",
+    "request": "^2.88.2",
     "robotjs": "^0.6.0",
     "terser": "^5.13.1",
+    "tesseract.js": "^2.1.5",
     "vue": "3.2.31",
     "vue-i18n": "^9.1.10",
     "vue-router": "^4.0.15",

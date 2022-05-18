@@ -14,10 +14,15 @@ function captureScreen(rect?:{x:number, y: number, width: number, height: number
   return ipcRenderer.sendSync('tools', {event: 'captureScreen', data: rect});
 }
 
+function recognizeText(data:{rect?:Rectangle, image?:ArrayBuffer, lang: TessLangCode}) {
+  ipcRenderer.send('tools', {event: 'recognizeText', data});
+}
+
 // Export for types in contracts.d.ts
 export const tools = {
   exitToolsWindow,
   captureScreen,
+  recognizeText,
 } as const;
 
 exposeInMainWorld('tools', tools);

@@ -1,53 +1,82 @@
 <template>
   <div style="position: fixed;top:0;left:0;right:0;bottom:0;user-select: none;">
     <clip-panel v-if="clipping" />
-    <div
-      ref="verticalToolbarRef"
-      class="vertical-toolbar"
+    <draggable-widget
       :class="showingToolbar ? '' : 'hidden'"
-      :style="toolbarPosition"
-      @mousedown="handleStartDrag"
-      @touchstart="handleStartDrag"
+      :initial-position="verticalToolbarInitialPosition"
     >
-      <el-icon
-        :title="t('tools.clipScreen')"
-        @click="startClipping"
+      <div
+        class="vertical-toolbar tools-window"
+        data-draggable
       >
-        <icon-scissor />
-      </el-icon>
-      <el-icon
-        :title="t('tools.captureFullScreen')"
-        @click="captureFullScreen"
-      >
-        <icon-camera />
-      </el-icon>
-      <el-icon
-        :title="t('tools.exit')"
-        @click="exit()"
-      >
-        <icon-close />
-      </el-icon>
-    </div>
+        <el-icon
+          :title="t('tools.clipScreen')"
+          @click.prevent="startClipping"
+        >
+          <icon-scissor />
+        </el-icon>
+        <el-icon
+          :title="t('tools.captureFullScreen')"
+          @click.prevent="captureFullScreen"
+        >
+          <icon-camera />
+        </el-icon>
+        <el-icon
+          :title="t('tools.recognizeText')"
+          @click.prevent="triggerSelectFileInputClick"
+        >
+          <i-mdi-ocr />
+          <input
+            ref="ocrFileInputRef"
+            type="file"
+            style="display: none;visibility: hidden;"
+            @change="recognizeTextInImage"
+          >
+        </el-icon>
+        <el-icon
+          :title="t('tools.exit')"
+          @click.prevent="exit()"
+        >
+          <icon-close />
+        </el-icon>
+      </div>
+    </draggable-widget>
+    <recognize-text-result
+      v-if="showingOcrResult"
+      :image="ocrResultImage"
+      :text="ocrResultText"
+      :words="ocrResultWords"
+      @close="showingOcrResult = false"
+    />
   </div>
 </template>
 <script lang="ts" setup>
 
-import {computed, ref, onMounted, onUnmounted} from 'vue';
+import {ref} from 'vue';
 import {Scissor as IconScissor, Close as IconClose, Camera as IconCamera} from '@element-plus/icons-vue';
 import ClipPanel from '/@/components/tools/ClipPanel.vue';
 import {useI18n} from 'vue-i18n';
+import {ElMessage} from 'element-plus';
+import DraggableWidget from '/@/components/DraggableWidget.vue';
+import RecognizeTextResult from '/@/components/tools/RecognizeTextResult.vue';
+import type {Word, RecognizeResult} from 'tesseract.js';
 
 const {t} = useI18n();
 
-const toolbarOffset = ref({x: window.innerWidth - 100, y: 100});
-const verticalToolbarRef = ref<HTMLElement>();
-const dragging = ref<''|'toolbar'>('');
-const dragStart = ref({x:0,y:0});
-const dragOriginal = {x:0, y: 0};
+const verticalToolbarInitialPosition = ref({x: window.innerWidth - 100, y: 100});
+
 const clipping = ref(false);
 const showingToolbar = ref(true);
 
-const toolbarPosition = computed(() => ({left: `${toolbarOffset.value.x}px`, top: `${toolbarOffset.value.y}px`}));
+
+// recognize text
+const ocrLang = ref<TessLangCode>('eng');
+const ocrFileInputRef = ref<HTMLInputElement>();
+const showingOcrResult = ref(false);
+const ocrResultImage = ref('');
+const ocrResultText = ref('');
+const ocrResultWords = ref<Word[]>([]);
+
 window.emitter.on('tools:shortcut', (data) => {
   if(data === 'Alt+CommandOrControl+A') {
     startClipping();
@@ -70,47 +99,19 @@ window.emitter.on('clip:exit', () => {
   clipping.value = false;
   showingToolbar.value = true;
 });
-onMounted(() => {
-  document.addEventListener('pointermove', handleDrag);
-  document.addEventListener('mouseup', handleStopDrag);
-  document.addEventListener('touchend', handleStopDrag);
+window.emitter.on('tools:message', ({message, type}) => {
+  ElMessage({
+    message,
+    type,
+  });
 });
-onUnmounted(() => {
-  document.removeEventListener('pointermove', handleDrag);
-  document.removeEventListener('mouseup', handleStopDrag);
-  document.removeEventListener('touchend', handleStopDrag);
+window.emitter.on('tools:recognizeText:success', (data:{image:string, result: RecognizeResult}) => {
+  console.log(data);
+  ocrResultImage.value = data.image;
+  ocrResultText.value = data.result.data.text;
+  ocrResultWords.value = data.result.data.words;
+  showingOcrResult.value = true;
 });
-
-function handleStartDrag(event:MouseEvent|TouchEvent) {
-  if(event instanceof TouchEvent) {
-    dragStart.value = {x: event.touches[0].clientX, y: event.touches[0].clientY};
-  } else {
-    dragStart.value = {x: event.clientX, y: event.clientY};
-  }
-  if(event.target === verticalToolbarRef.value) {
-    dragOriginal.x = toolbarOffset.value.x;
-    dragOriginal.y = toolbarOffset.value.y;
-    dragging.value = 'toolbar';
-  }
-}
-
-function handleDrag(event:TouchEvent|PointerEvent) {
-  if(dragging.value === 'toolbar') {
-    let clientX, clientY;
-    if(event instanceof TouchEvent) {
-      clientX = event.touches[0].clientX;
-      clientY = event.touches[0].clientY;
-    } else {
-      clientX = event.clientX;
-      clientY = event.clientY;
-    }
-    toolbarOffset.value = {x: clientX - dragStart.value.x + dragOriginal.x, y: clientY - dragStart.value.y + dragOriginal.y};
-  }
-}
-
-function handleStopDrag() {
-  dragging.value = '';
-}
 
 function startClipping() {
   clipping.value = true;
@@ -126,6 +127,21 @@ function captureFullScreen() {
   }));
 }
 
+function triggerSelectFileInputClick() {
+  ocrFileInputRef.value?.click();
+}
+
+function recognizeTextInImage() {
+  if(ocrFileInputRef.value && ocrFileInputRef.value.files && ocrFileInputRef.value.files.length > 0) {
+    ocrFileInputRef.value.files[0].arrayBuffer().then(buf => {
+      if(ocrFileInputRef.value) {
+        ocrFileInputRef.value.value = '';
+      }
+      window.tools.recognizeText({image: buf, lang: ocrLang.value});
+    });
+  }
+}
+
 function exit() {
   window.tools.exitToolsWindow();
 }
@@ -133,14 +149,7 @@ function exit() {
 <style lang="scss" scoped>
 .vertical-toolbar {
   $iconSize: 32px;
-  position: fixed;
-  width: $iconSize + 6px;
   height: 400px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 3px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0 3px 3px 0;
-  cursor: move;
-  padding: 3px;
   display: flex;
   flex-direction: column;
   .el-icon {

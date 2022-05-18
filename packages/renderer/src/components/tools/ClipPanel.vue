@@ -6,14 +6,29 @@
       class="clip-toolbar"
       :style="clipToolbarPosition"
     >
-      <el-icon :title="t('tools.ok')">
-        <icon-check @click="copyToClipboard" />
+      <el-icon
+        :title="t('tools.ok')"
+        @click="copyToClipboard"
+      >
+        <icon-check />
       </el-icon>
-      <el-icon :title="t('tools.cancel')">
-        <icon-close @click="cancelSelection" />
+      <el-icon
+        :title="t('tools.cancel')"
+        @click="cancelSelection"
+      >
+        <icon-close />
       </el-icon>
-      <el-icon :title="t('tools.exit')">
-        <i-uicons-backward @click="exitClipping" />
+      <el-icon
+        :title="t('tools.recognizeText')"
+        @click="recognizeText"
+      >
+        <i-mdi-ocr />
+      </el-icon>
+      <el-icon
+        :title="t('tools.exit')"
+        @click="exitClipping"
+      >
+        <i-uicons-backward />
       </el-icon>
     </div>
   </div>
@@ -225,6 +240,22 @@ function updateClipToolbarPosition() {
     x: Math.min(Math.max(0, boundingRect.left), selectionRect.canvas.width??0 - 60),
     y: Math.min(Math.max(0, boundingRect.top + boundingRect.height + 20), selectionRect.canvas.height??0 - 64),
   };
+}
+
+function recognizeText() {
+  if(!canvas || !selectionRect) {
+    return;
+  }
+  const boundingRect = selectionRect.getBoundingRect();
+  const rect = {x: boundingRect.left, y: boundingRect.top, width: boundingRect.width, height: boundingRect.height};
+  cancelSelection();
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  canvas.setBackgroundColor('transparent', () => {});
+  hasSelection.value = false;
+  exitClipping();
+  window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+    window.tools.recognizeText({rect, lang: 'eng'});
+  }));
 }
 </script>
 <style lang="scss">

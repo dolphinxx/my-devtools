@@ -25,7 +25,15 @@ a {
 
 .hidden {
   display: none;
+}
+
+.invisible {
   visibility: hidden;
+}
+
+.no-drag {
+  user-select: none;
+  user-drag: none;
 }
 
 .el-dropdown-menu {
@@ -49,6 +57,14 @@ a {
       .el-switch__action, .el-switch__inner {
         margin-left: -13px;
       }
+    }
+  }
+}
+
+.el-textarea {
+  &.match-parent {
+    &>* {
+      height: 100%;
     }
   }
 }

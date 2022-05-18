@@ -1,6 +1,7 @@
 import {node} from '../../.electron-vendors.cache.json';
 import {join} from 'path';
 import {builtinModules} from 'module';
+import excludeDependencies from '../../scripts/rollup-plugin-exclude';
 
 const PACKAGE_ROOT = __dirname;
 
@@ -14,9 +15,12 @@ const config = {
   root: PACKAGE_ROOT,
   envDir: process.cwd(),
   resolve: {
-    alias: {
-      '/@/': join(PACKAGE_ROOT, 'src') + '/',
-    },
+    alias: [
+      {
+        find: '/@/',
+        replacement: join(PACKAGE_ROOT, 'src') + '/',
+      },
+    ],
   },
   build: {
     sourcemap: 'inline',
@@ -33,6 +37,7 @@ const config = {
         'electron',
         'electron-devtools-installer',
         'robotjs',
+        'request',
         ...builtinModules.flatMap(p => [p, `node:${p}`]),
       ],
       output: {
@@ -42,6 +47,9 @@ const config = {
     emptyOutDir: true,
     brotliSize: false,
   },
+  plugins: [
+    excludeDependencies(['resolve-url', 'blueimp-load-image']),
+  ],
 };
 
 export default config;

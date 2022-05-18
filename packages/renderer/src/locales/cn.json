@@ -119,6 +119,10 @@
     "captureFullScreen": "捕获全屏",
     "exit": "退出",
     "ok": "确定",
-    "cancel": "取消"
+    "cancel": "取消",
+    "close": "关闭",
+    "recognizeText": "识别文字",
+    "marks": "标记",
+    "text": "文字"
   }
 }

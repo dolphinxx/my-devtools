@@ -61,12 +61,3 @@ $gutter: 20px;
 .form-gutter {
   margin-top: $gutter;
 }
-
-
-.el-textarea {
-  &.match-parent {
-    &>* {
-      height: 100%;
-    }
-  }
-}
